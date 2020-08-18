@@ -21,7 +21,6 @@ addons:
     - gperf
     - php
     - cmake
-    - openjdk-11-jdk-headless
     - g++
     - ccache
     - maven
