@@ -6,6 +6,7 @@ mkdir $TRAVIS_BUILD_DIR/out
 choco install openjdk11
 choco install maven
 
+echo $M2_HOME
 la -alch /c/ProgramData/chocolatey/lib
 la -alch /c/ProgramData/chocolatey/lib/maven
 la -alch /c/ProgramData/chocolatey/lib/maven/apache-maven-3.6.3-bin
