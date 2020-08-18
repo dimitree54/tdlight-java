@@ -7,11 +7,11 @@ choco install openjdk11
 choco install maven
 
 echo $M2_HOME
-la -alch /c/ProgramData/chocolatey/lib
-la -alch /c/ProgramData/chocolatey/lib/maven
-la -alch /c/ProgramData/chocolatey/lib/maven/apache-maven-3.6.3-bin
-la -alch /c/ProgramData/chocolatey/lib/maven/apache-maven-3.6.3-bin/bin
-la -alch /c/ProgramData/chocolatey/lib/maven/apache-maven-3.6.3-bin/bin/mvn.cmd
+ls -alch /c/ProgramData/chocolatey/lib
+ls -alch /c/ProgramData/chocolatey/lib/maven
+ls -alch /c/ProgramData/chocolatey/lib/maven/apache-maven-3.6.3-bin
+ls -alch /c/ProgramData/chocolatey/lib/maven/apache-maven-3.6.3-bin/bin
+ls -alch /c/ProgramData/chocolatey/lib/maven/apache-maven-3.6.3-bin/bin/mvn.cmd
 
 choco install base64
 
