@@ -45,7 +45,7 @@ export JAVA_HOME="c:\\java11"
 
 # Build
 cmake -DCMAKE_BUILD_TYPE=Release -DTD_ENABLE_JNI=ON  -DCMAKE_INSTALL_PREFIX:PATH=${TD_BIN_DIR} -DCMAKE_TOOLCHAIN_FILE:FILEPATH=$TRAVIS_BUILD_DIR\\vcpkg\\scripts\\buildsystems\\vcpkg.cmake ${TD_SRC_DIR}
-cmake --build . --target install -- -j4
+cmake --build . --target install
 
 
 cd ../../../../../
@@ -53,7 +53,7 @@ cd ../../../../../
 
 cd src/main/jni/jtdlib/build
 cmake -DCMAKE_BUILD_TYPE=Release -DTd_DIR=${TD_BIN_DIR}/lib/cmake/Td -DJAVA_SRC_DIR=${JAVA_SRC_DIR} -DCMAKE_INSTALL_PREFIX:PATH=.. -DCMAKE_TOOLCHAIN_FILE:FILEPATH=$TRAVIS_BUILD_DIR\\vcpkg\\scripts\\buildsystems\\vcpkg.cmake ..
-cmake --build . --target install -- -j4
+cmake --build . --target install
 
 cd ..
 rm -r td
