@@ -57,6 +57,11 @@
             <artifactId>common-utils</artifactId>
             <version>1.0.3</version>
         </dependency>
+        <dependency>
+            <groupId>it.tdlight</groupId>
+            <artifactId>tdlight-natives-linux-amd64</artifactId>
+            <version>1.0.3</version>
+        </dependency> 
     </dependencies>
     <build>
         <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->

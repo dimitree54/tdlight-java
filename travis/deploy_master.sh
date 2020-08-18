@@ -46,6 +46,7 @@ mv "$TRAVIS_BUILD_DIR/out/$SRC_LIBNAME" "src/main/resources/libs/$TRAVIS_OS_NAME
 
 # EXIT IF THE NATIVE LIBRARY ISN'T CHANGED
 if (git diff --exit-code "src/main/resources/libs/$TRAVIS_OS_NAME_STANDARD/$TRAVIS_CPU_ARCH_STANDARD/$LIBNAME"); then
+    echo "Binaries are already updated."
     exit 0
 fi
 
@@ -61,3 +62,14 @@ git tag -a "v$NEW_VERSION" -m "Version $NEW_VERSION"
 git push origin "v$NEW_VERSION"
 git push
 mvn -B -V deploy
+
+# Upgrade the dependency of tdlight-java
+cd ~/build
+git clone git@ssh.git.ignuranza.net:tdlight-team/tdlight-java.git
+cd tdlight-java
+git checkout master
+mvn versions:use-latest-releases -Dincludes=it.tdlight:tdlight-natives-$TRAVIS_OS_NAME_STANDARD-$TRAVIS_CPU_ARCH_STANDARD
+rm pom.xml.versionsBackup
+git add pom.xml
+git commit -m "Upgrade $TRAVIS_OS_NAME_STANDARD-$TRAVIS_CPU_ARCH_STANDARD natives"
+git push

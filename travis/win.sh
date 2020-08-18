@@ -11,11 +11,6 @@ export JAVA_HOME="/c/Program Files/OpenJDK/openjdk-11.0.8_10"
 choco install openjdk11 --version=11.0.8.10
 choco install maven --version=3.6.3
 choco install base64
-
-touch "$TRAVIS_BUILD_DIR/out/libtdjni.dll"
-exit 0
-
-# Build deps
 choco install gperf 
 choco install strawberryperl 
 
