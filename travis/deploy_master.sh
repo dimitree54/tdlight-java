@@ -19,11 +19,7 @@ echo "TRAVIS_CPU_ARCH_STANDARD: $TRAVIS_CPU_ARCH_STANDARD"
 
 # Setup ssh
 mkdir -p ~/.ssh
-if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then 
-    echo "$GIT_IGN_TRAVIS_DEPLOY_PRIVATE_KEY" | base64.exe -d > ~/.ssh/id_rsa
-else
-    echo "$GIT_IGN_TRAVIS_DEPLOY_PRIVATE_KEY" | base64 -d > ~/.ssh/id_rsa
-fi
+echo "$GIT_IGN_TRAVIS_DEPLOY_PRIVATE_KEY" | base64 -d > ~/.ssh/id_rsa
 chmod 600 ~/.ssh/id_rsa || true
 ssh-keyscan ssh.git.ignuranza.net >> $HOME/.ssh/known_hosts
 ssh-keyscan git.ignuranza.net >> $HOME/.ssh/known_hosts
@@ -39,19 +35,15 @@ if [ "$TRAVIS_OS_NAME_STANDARD" = "windows" ]; then
     mkdir -p "src/main/resources/libs/$TRAVIS_OS_NAME_STANDARD/$TRAVIS_CPU_ARCH_STANDARD"
     mv "$TRAVIS_BUILD_DIR/out/libtdjni.dll" "src/main/resources/libs/$TRAVIS_OS_NAME_STANDARD/$TRAVIS_CPU_ARCH_STANDARD/tdjni.dll"
     git add "src/main/resources/libs/$TRAVIS_OS_NAME_STANDARD/$TRAVIS_CPU_ARCH_STANDARD/tdjni.dll"
-    /c/ProgramData/chocolatey/lib/maven/apache-maven-3.6.3-bin/bin/mvn.cmd build-helper:parse-version versions:set \
-    -DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.minorVersion}.\${parsedVersion.nextIncrementalVersion} \
-    versions:commit
-    NEW_VERSION=$(/c/ProgramData/chocolatey/lib/maven/apache-maven-3.6.3-bin/bin/mvn.cmd help:evaluate -Dexpression=project.version -q -DforceStdout)
 else
     mkdir -p "src/main/resources/libs/$TRAVIS_OS_NAME_STANDARD/$TRAVIS_CPU_ARCH_STANDARD"
     mv "$TRAVIS_BUILD_DIR/out/libtdjni.so" "src/main/resources/libs/$TRAVIS_OS_NAME_STANDARD/$TRAVIS_CPU_ARCH_STANDARD/tdjni.so"
     git add "src/main/resources/libs/$TRAVIS_OS_NAME_STANDARD/$TRAVIS_CPU_ARCH_STANDARD/tdjni.so"
-    mvn build-helper:parse-version versions:set \
-    -DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.minorVersion}.\${parsedVersion.nextIncrementalVersion} \
-    versions:commit
-    NEW_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
 fi
+mvn build-helper:parse-version versions:set \
+-DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.minorVersion}.\${parsedVersion.nextIncrementalVersion} \
+versions:commit
+NEW_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
 git add pom.xml
 git commit -m "Updated native library"
 git tag -a "v$NEW_VERSION" -m "Version $NEW_VERSION"

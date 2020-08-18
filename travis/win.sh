@@ -4,15 +4,7 @@ mkdir $TRAVIS_BUILD_DIR/out
 
 # Build deps
 choco install openjdk11
-choco install maven
-
-echo $M2_HOME
-ls -alch /c/ProgramData/chocolatey/lib
-ls -alch /c/ProgramData/chocolatey/lib/maven
-ls -alch /c/ProgramData/chocolatey/lib/maven/apache-maven-3.6.3-bin
-ls -alch /c/ProgramData/chocolatey/lib/maven/apache-maven-3.6.3-bin/bin
-ls -alch /c/ProgramData/chocolatey/lib/maven/apache-maven-3.6.3-bin/bin/mvn.cmd
-
+choco install maven --version=3.6.3
 choco install base64
 
 touch "$TRAVIS_BUILD_DIR/out/libtdjni.dll"
@@ -23,7 +15,7 @@ choco install gperf
 choco install strawberryperl 
 
 # Setup variables
-export PATH=$PATH:/c/ProgramData/chocolatey/lib/maven/bin:/c/ProgramData/chocolatey/lib/base64/tools
+export PATH=$PATH:/c/ProgramData/chocolatey/lib/maven/apache-maven-3.6.3/bin:/c/ProgramData/chocolatey/lib/base64/tools
 # End setup variables
 
 cd $TRAVIS_BUILD_DIR
