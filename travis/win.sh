@@ -25,6 +25,7 @@ rm $JAVA_SRC_DIR/it/tdlight/tdnatives/TdApi.java || true
 rm $JAVA_SRC_DIR/it/tdlight/tdnatives/new_TdApi.java || true
 
 # ====== Environment setup
+mkdir -p $TRAVIS_BUILD_DIR/out
 mkdir $TRAVIS_BUILD_DIR/out
 mkdir $TD_BUILD_DIR || true
 mkdir $TDNATIVES_CPP_BUILD_DIR || true
@@ -52,4 +53,4 @@ cmake -A x64 -DCMAKE_BUILD_TYPE=Release -DTD_BIN_DIR=${TD_BIN_DIR} -DTDNATIVES_B
 cmake --build $TDNATIVES_CPP_BUILD_DIR --target install
 
 # ====== Copy output
-mv $TDNATIVES_BIN_DIR/libtdjni.dll $TRAVIS_BUILD_DIR/out
+mv $TDNATIVES_BIN_DIR/libtdjni.dll $TRAVIS_BUILD_DIR/out/libtdjni.dll

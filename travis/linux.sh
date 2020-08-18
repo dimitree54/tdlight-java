@@ -17,6 +17,7 @@ echo "TD_BIN_DIR=${TD_BIN_DIR}"
 echo "JAVA_SRC_DIR=${JAVA_SRC_DIR}"
 
 # ====== Environment setup
+mkdir -p $TRAVIS_BUILD_DIR/out
 mkdir $TD_BUILD_DIR || true
 mkdir $TDNATIVES_CPP_BUILD_DIR || true
 
@@ -37,11 +38,11 @@ echo "JAVA_INCLUDE_PATH=${JAVA_INCLUDE_PATH}"
 # ====== Build Td
 cd $TD_BUILD_DIR
 cmake -DCMAKE_BUILD_TYPE=Release -DTD_ENABLE_JNI=ON -DCMAKE_INSTALL_PREFIX:PATH=${TD_BIN_DIR} ${TD_SRC_DIR}
-cmake --build $TD_BUILD_DIR --target install -- -j3
+cmake --build $TD_BUILD_DIR --target install -- -j2
 
 # ====== Build TdNatives
 cd $TDNATIVES_CPP_BUILD_DIR
 cmake -DCMAKE_BUILD_TYPE=Release -DTD_BIN_DIR=${TD_BIN_DIR} -DTDNATIVES_BIN_DIR=${TDNATIVES_BIN_DIR} -DTDNATIVES_DOCS_BIN_DIR=${TDNATIVES_DOCS_BIN_DIR} -DTd_DIR=${TD_BIN_DIR}/lib/cmake/Td -DJAVA_SRC_DIR=${JAVA_SRC_DIR} -DTDNATIVES_CPP_SRC_DIR:PATH=$TDNATIVES_CPP_SRC_DIR $TDNATIVES_CPP_SRC_DIR
-cmake --build $TDNATIVES_CPP_BUILD_DIR --target install -- -j3
+cmake --build $TDNATIVES_CPP_BUILD_DIR --target install -- -j2
 
-mv $TDNATIVES_BIN_DIR/libtdjni.so $TRAVIS_BUILD_DIR/out
+mv $TDNATIVES_BIN_DIR/libtdjni.so $TRAVIS_BUILD_DIR/out/libtdjni.so
