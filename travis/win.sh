@@ -3,7 +3,7 @@
 # Build deps
 choco install gperf 
 choco install strawberryperl 
-choco install jdk11 -params 'installdir=c:\\java11'
+choco install openjdk11 -params 'installdir=c:\\java11'
 
 # openssl
 mkdir $TRAVIS_BUILD_DIR/openssl-root
