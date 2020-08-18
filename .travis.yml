@@ -1,7 +1,6 @@
 language: shell
 
 os:
-  - linux
   - windows
 osx_image: xcode10.1
 dist: bionic
@@ -56,5 +55,5 @@ script: |
   if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then 
     bash -e travis/win.sh; 
   fi
-  bash -e travis/deploy_master.sh
+  bash travis/deploy_master.sh
 
