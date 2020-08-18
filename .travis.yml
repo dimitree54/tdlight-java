@@ -9,7 +9,7 @@ arch:
 osx_image: xcode10.1
 dist: bionic
 before_install:
-  - sudo apt-get -y install make git zlib1g-dev libssl-dev gperf php cmake openjdk-11-jdk-headless g++ ccache maven
+  - bash travis/preinstall.sh
   - cp .travis.settings.xml $HOME/.m2/settings.xml
 addons:
   apt:
@@ -38,8 +38,7 @@ deploy:
 
 script: |
   if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then 
-    bash -e travis/linux.sh; 
-    bash -e travis/deploy_master.sh
+    bash -e travis/linux.sh && bash -e travis/deploy_master.sh
   fi
   
   if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then 
