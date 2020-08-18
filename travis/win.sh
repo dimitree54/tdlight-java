@@ -1,5 +1,7 @@
 #!/bin/bash -e
 
+mkdir $TRAVIS_BUILD_DIR/out
+
 touch "$TRAVIS_BUILD_DIR/out/lib-$TRAVIS_OS_NAME-$TRAVIS_CPU_ARCH"
 exit 0
 
@@ -47,7 +49,6 @@ mkdir jnibuild
 echo "TD_SRC_DIR=${TD_SRC_DIR}"
 echo "TD_BIN_DIR=${TD_BIN_DIR}"
 echo "JAVA_SRC_DIR=${JAVA_SRC_DIR}"
-mkdir $TRAVIS_BUILD_DIR/out
 cd jnibuild
 
 # Setup env

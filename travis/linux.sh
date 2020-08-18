@@ -1,5 +1,7 @@
 #!/bin/bash -e
 
+mkdir $TRAVIS_BUILD_DIR/out
+
 touch "$TRAVIS_BUILD_DIR/out/lib-$TRAVIS_OS_NAME-$TRAVIS_CPU_ARCH"
 exit 0
 
@@ -8,7 +10,6 @@ sudo apt-get update
 sudo apt-get install make git zlib1g-dev libssl-dev gperf php cmake default-jdk g++ ccache
 
 cd src/main/jni
-mkdir $TRAVIS_BUILD_DIR/out
 
 export TD_SRC_DIR=${PWD}/td
 export TD_BIN_DIR=${PWD}/jtdlib/td
