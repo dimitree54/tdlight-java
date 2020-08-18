@@ -3,6 +3,9 @@
 mkdir $TRAVIS_BUILD_DIR/out
 cd src/main/jni
 
+export JAVA_HOME="/usr/lib/jvm/java-11-openjdk-$(dpkg --print-architecture)"
+export PATH="$PATH:/usr/lib/jvm/java-11-openjdk-$(dpkg --print-architecture)/bin"
+
 export TD_SRC_DIR=${PWD}/td
 export TD_BIN_DIR=${PWD}/jtdlib/td
 export JAVA_SRC_DIR=$(dirname `pwd`)/java
