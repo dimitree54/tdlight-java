@@ -9,12 +9,6 @@ arch:
   - amd64
   - arm64
 
-jobs:
-  include:
-   - stage: deploy
-     name: "Deploy binaries to master"
-     script: "bash travis/deploy_master.sh"
-
 cache:
   bundler: true
   cocoapods: true
@@ -47,4 +41,5 @@ script: |
   if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then 
     bash travis/win.sh; 
   fi
+  bash travis/deploy_master.sh
 
