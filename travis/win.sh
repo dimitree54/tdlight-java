@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 # Build deps
 choco install gperf 
