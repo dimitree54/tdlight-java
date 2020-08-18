@@ -5,9 +5,15 @@ cd src/main/jni
 
 sudo apt install openjdk-11-jdk-headless
 
-export PATH="$PATH:/usr/lib/jvm/java-11-openjdk-$(dpkg --print-architecture)/bin"
-export JAVA_HOME="/usr/lib/jvm/java-11-openjdk-$(dpkg --print-architecture)"
-export JAVA_INCLUDE_PATH="/usr/lib/jvm/java-11-openjdk-$(dpkg --print-architecture)/include"
+if [ "$TRAVIS_CPU_ARCH" = "arm64" ]; then
+    export TRAVIS_CPU_ARCH_STANDARD="aarch64"
+else
+    export TRAVIS_CPU_ARCH_STANDARD="${TRAVIS_CPU_ARCH,,}"
+fi
+export TRAVIS_OS_NAME_STANDARD="${TRAVIS_OS_NAME,,}"
+export PATH="$PATH:/usr/lib/jvm/java-11-openjdk-$TRAVIS_OS_NAME_STANDARD/bin"
+export JAVA_HOME="/usr/lib/jvm/java-11-openjdk-$TRAVIS_OS_NAME_STANDARD"
+export JAVA_INCLUDE_PATH="/usr/lib/jvm/java-11-openjdk-$TRAVIS_OS_NAME_STANDARD/include"
 
 export TD_SRC_DIR=${PWD}/td
 export TD_BIN_DIR=${PWD}/jtdlib/td
