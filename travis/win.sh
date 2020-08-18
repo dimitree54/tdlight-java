@@ -15,7 +15,7 @@ choco install gperf
 choco install strawberryperl 
 
 # Setup variables
-export PATH=$PATH:/mnt/c/ProgramData/chocolatey/lib/maven/bin
+export PATH=$PATH:/c/ProgramData/chocolatey/lib/maven/bin:/c/ProgramData/chocolatey/lib/base64/tools
 # End setup variables
 
 cd $TRAVIS_BUILD_DIR
