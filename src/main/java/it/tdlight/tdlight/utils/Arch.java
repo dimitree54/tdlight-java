@@ -15,7 +15,16 @@
  *     along with JTdlib.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+package it.tdlight.tdlight.utils;
+
 /**
- * it.ernytech.tdbot is a group of class for to simplify the creation of bots or userbots.
+ * Enumeration with all architectures recognized by this library.
  */
-package it.ernytech.tdbot;
+public enum Arch {
+    amd64,
+    i386,
+    armhf,
+    aarch64,
+	ppc64le,
+    unknown
+}

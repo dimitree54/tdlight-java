@@ -1,3 +1,4 @@
+package it.tdlight.tdlight.natives;
 /*
  * Copyright (c) 2018. Ernesto Castellotti <erny.castell@gmail.com>
  * This file is part of JTdlib.
@@ -15,16 +16,15 @@
  *     along with JTdlib.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package it.ernytech.tdlib.utils;
 
-/**
- * An exception that is thrown when the LoadLibrary class fails to load the library.
- */
-public class CantLoadLibrary extends RuntimeException {
-    /**
-     * Creates a new CantLoadLibrary exception.
-     */
-    CantLoadLibrary() {
-        super("FATAL: org.ernytech.tdlib.utils.Init failled when load tdlib library, execution can't continue");
-    }
+
+import it.ernytech.tdlib.TdApi.Function;
+import it.ernytech.tdlib.TdApi.Object;
+
+public class NativeClient {
+    protected static native long createNativeClient();
+    protected static native void nativeClientSend(long nativeClientId, long eventId, Function function);
+    protected static native int nativeClientReceive(long nativeClientId, long[] eventIds, Object[] events, double timeout);
+    protected static native Object nativeClientExecute(Function function);
+    protected static native void destroyNativeClient(long nativeClientId);
 }

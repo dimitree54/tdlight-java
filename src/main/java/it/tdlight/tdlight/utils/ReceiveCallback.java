@@ -15,15 +15,17 @@
  *     along with JTdlib.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package it.ernytech.tdlib;
+package it.tdlight.tdlight.utils;
+
+import it.tdlight.tdlight.Response;
 
 /**
- * A type of callback function that will be called when a fatal error happens.
+ * Interface of callback for receive incoming update or request response.
  */
-public interface FatalErrorCallbackPtr {
+public interface ReceiveCallback {
     /**
-     * Send error message to callback.
-     * @param error_message String with a description of a happened fatal error.
+     * This method is called when the library receives update or request response.
+     * @param response The incoming update or request response.
      */
-    void onFatalError(String error_message);
+    void onResult(Response response);
 }

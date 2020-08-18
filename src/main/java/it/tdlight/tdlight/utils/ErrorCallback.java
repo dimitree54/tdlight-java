@@ -15,7 +15,17 @@
  *     along with JTdlib.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+package it.tdlight.tdlight.utils;
+
+import it.tdlight.tdlight.Response;
+
 /**
- * it.ernytech.tdlib.utils is a group of utils necessary to complete the essential operation of tdlib.
+ * Interface of callback for receive incoming error response.
  */
-package it.ernytech.tdlib.utils;
+public interface ErrorCallback {
+    /**
+     * This method is called when the library receives error responses
+     * @param error The incoming error response.
+     */
+    void onError(Response error);
+}

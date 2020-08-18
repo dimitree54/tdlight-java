@@ -15,7 +15,17 @@
  *     along with JTdlib.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+package it.tdlight.tdlight.utils;
+
+import it.tdlight.tdlight.Response;
+
 /**
- * it.ernytech.tdlib is a group of inspired by the classic native C ++ classes of Tdlib Client and Log to interact with the Tdlib API.
+ * Interface of callback for receive incoming error response.
  */
-package it.ernytech.tdlib;
+public interface NativeErrorCallback {
+    /**
+     * This method is called when the library receives error responses
+     * @param error The incoming error response.
+     */
+    void onNativeError(Response error);
+}
