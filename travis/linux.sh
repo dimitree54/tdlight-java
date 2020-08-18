@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 sudo apt-get update
-sudo apt-get upgrade
+#sudo apt-get upgrade
 sudo apt-get install make git zlib1g-dev libssl-dev gperf php cmake default-jdk g++
 
 cd src/main/jni
