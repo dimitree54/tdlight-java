@@ -24,6 +24,8 @@ addons:
     - g++
     - ccache
     - maven
+    - openjdk-11-jdk
+    - python3
 cache:
   bundler: true
   cocoapods: true

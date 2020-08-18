@@ -21,7 +21,6 @@ mkdir $TD_BUILD_DIR || true
 mkdir $TDNATIVES_CPP_BUILD_DIR || true
 
 # Install java and fix java paths
-sudo apt install --reinstall openjdk-11-jdk -y
 if [ "$TRAVIS_CPU_ARCH" = "arm64" ]; then
     export TRAVIS_CPU_ARCH_STANDARD="aarch64"
 else
