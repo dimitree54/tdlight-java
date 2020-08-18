@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 # Setup variables
-export PATH=$PATH:/c/ProgramData/chocolatey/lib/maven/bin:/c/ProgramData/chocolatey/lib/base64/tools
+export PATH=$PATH:/c/ProgramData/chocolatey/lib/maven/apache-maven-3.6.3-bin/bin:/c/ProgramData/chocolatey/lib/base64/tools
 export MAVEN_OPTS="--add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/sun.nio.ch=ALL-UNNAMED --add-opens java.base/java.lang.reflect=ALL-UNNAMED --add-opens java.base/javax.crypto=ALL-UNNAMED --add-opens java.base/java.io=ALL-UNNAMED"
 
 if [ "$TRAVIS_CPU_ARCH" = "arm64" ]; then
@@ -39,10 +39,10 @@ if [ "$TRAVIS_OS_NAME_STANDARD" = "windows" ]; then
     mkdir -p "src/main/resources/libs/$TRAVIS_OS_NAME_STANDARD/$TRAVIS_CPU_ARCH_STANDARD"
     mv "$TRAVIS_BUILD_DIR/out/libtdjni.dll" "src/main/resources/libs/$TRAVIS_OS_NAME_STANDARD/$TRAVIS_CPU_ARCH_STANDARD/tdjni.dll"
     git add "src/main/resources/libs/$TRAVIS_OS_NAME_STANDARD/$TRAVIS_CPU_ARCH_STANDARD/tdjni.dll"
-    /c/ProgramData/chocolatey/lib/maven/bin/mvn.cmd build-helper:parse-version versions:set \
+    /c/ProgramData/chocolatey/lib/maven/apache-maven-3.6.3-bin/bin/mvn.cmd build-helper:parse-version versions:set \
     -DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.minorVersion}.\${parsedVersion.nextIncrementalVersion} \
     versions:commit
-    NEW_VERSION=$(/c/ProgramData/chocolatey/lib/maven/bin/mvn.cmd help:evaluate -Dexpression=project.version -q -DforceStdout)
+    NEW_VERSION=$(/c/ProgramData/chocolatey/lib/maven/apache-maven-3.6.3-bin/bin/mvn.cmd help:evaluate -Dexpression=project.version -q -DforceStdout)
 else
     mkdir -p "src/main/resources/libs/$TRAVIS_OS_NAME_STANDARD/$TRAVIS_CPU_ARCH_STANDARD"
     mv "$TRAVIS_BUILD_DIR/out/libtdjni.so" "src/main/resources/libs/$TRAVIS_OS_NAME_STANDARD/$TRAVIS_CPU_ARCH_STANDARD/tdjni.so"
