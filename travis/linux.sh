@@ -30,6 +30,10 @@ export PATH="$PATH:/usr/lib/jvm/java-11-openjdk-$TRAVIS_CPU_ARCH_STANDARD/bin"
 export JAVA_HOME="/usr/lib/jvm/java-11-openjdk-$TRAVIS_CPU_ARCH_STANDARD"
 export JAVA_INCLUDE_PATH="/usr/lib/jvm/java-11-openjdk-$TRAVIS_CPU_ARCH_STANDARD/include"
 
+echo "PATH=${PATH}"
+echo "JAVA_HOME=${JAVA_HOME}"
+echo "JAVA_INCLUDE_PATH=${JAVA_INCLUDE_PATH}"
+
 # ====== Build Td
 cd $TD_BUILD_DIR
 cmake -DCMAKE_BUILD_TYPE=Release -DTD_ENABLE_JNI=ON -DCMAKE_INSTALL_PREFIX:PATH=${TD_BIN_DIR} ${TD_SRC_DIR}
