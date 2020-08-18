@@ -20,14 +20,14 @@ cd jnibuild
 #export JAVA_HOME=/usr/lib/jvm/java-1.13.0-openjdk-amd64
 #export JAVA_INCLUDE_PATH=/usr/lib/jvm/java-1.13.0-openjdk-amd64/include/
 cmake -DCMAKE_BUILD_TYPE=Release -DTD_ENABLE_JNI=ON -DCMAKE_INSTALL_PREFIX:PATH=${TD_BIN_DIR} ${TD_SRC_DIR}
-travis_wait 30 cmake --build . --target install -- -j4
+cmake --build . --target install -- -j4
 
 cd ../../../../../
 #mvn install -X
 
 cd src/main/jni/jtdlib/build
 cmake -DCMAKE_BUILD_TYPE=Release -DTd_DIR=${TD_BIN_DIR}/lib/cmake/Td -DJAVA_SRC_DIR=${JAVA_SRC_DIR} -DCMAKE_INSTALL_PREFIX:PATH=.. ..
-travis_wait 30 cmake --build . --target install -- -j4
+cmake --build . --target install -- -j4
 cd ..
 #rm -r jnibuild
 #rm -r build

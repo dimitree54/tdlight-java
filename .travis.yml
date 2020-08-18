@@ -49,7 +49,7 @@ deploy:
 
 script: |
   if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then 
-    bash -e travis/linux.sh && bash -e travis/deploy_master.sh
+    travis_wait 30 bash -e travis/linux.sh && bash -e travis/deploy_master.sh
   fi
   
   if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then 
