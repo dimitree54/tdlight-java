@@ -21,14 +21,14 @@ mkdir $TD_BUILD_DIR || true
 mkdir $TDNATIVES_CPP_BUILD_DIR || true
 
 # Install java and fix java paths
-if [ "$TRAVIS_CPU_ARCH" = "arm64" ]; then
-    export TRAVIS_CPU_ARCH_STANDARD="aarch64"
+if [ "$TRAVIS_CPU_ARCH" = "aarch64" ]; then
+    export TRAVIS_CPU_ARCH_JAVA="arm64"
 else
-    export TRAVIS_CPU_ARCH_STANDARD="${TRAVIS_CPU_ARCH,,}"
+    export TRAVIS_CPU_ARCH_JAVA="${TRAVIS_CPU_ARCH,,}"
 fi
-export PATH="$PATH:/usr/lib/jvm/java-11-openjdk-$TRAVIS_CPU_ARCH_STANDARD/bin"
-export JAVA_HOME="/usr/lib/jvm/java-11-openjdk-$TRAVIS_CPU_ARCH_STANDARD"
-export JAVA_INCLUDE_PATH="/usr/lib/jvm/java-11-openjdk-$TRAVIS_CPU_ARCH_STANDARD/include"
+export PATH="$PATH:/usr/lib/jvm/java-11-openjdk-$TRAVIS_CPU_ARCH_JAVA/bin"
+export JAVA_HOME="/usr/lib/jvm/java-11-openjdk-$TRAVIS_CPU_ARCH_JAVA"
+export JAVA_INCLUDE_PATH="/usr/lib/jvm/java-11-openjdk-$TRAVIS_CPU_ARCH_JAVA/include"
 
 echo "PATH=${PATH}"
 echo "JAVA_HOME=${JAVA_HOME}"
