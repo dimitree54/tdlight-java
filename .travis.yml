@@ -3,27 +3,16 @@ language: shell
 os:
   - linux
   - windows
-osx_image: xcode10.1
-dist: bionic
-addons:
-  apt:
-    packages:
-    - make
-    - git
-    - zlib1g-dev
-    - libssl-dev
-    - gperf
-    - php
-    - cmake
-    - openjdk-11-jdk-headless
-    - g++
-    - ccache
-    - maven
-
 arch:
   - amd64
   - arm64
-
+osx_image: xcode10.1
+dist: bionic
+before_install:
+  - sudo apt-get -y install make git zlib1g-dev libssl-dev gperf php cmake openjdk-11-jdk-headless g++ ccache maven
+addons:
+  apt:
+    update: true
 cache:
   bundler: true
   cocoapods: true
