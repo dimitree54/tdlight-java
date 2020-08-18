@@ -15,7 +15,7 @@ addons:
     - gperf
     - php
     - cmake
-    - default-jdk
+    - openjdk-11-jdk-headless
     - g++
     - ccache
     - maven
