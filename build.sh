@@ -1,62 +1,43 @@
 #!/bin/bash -e
-#rm -r jtdlib/jnibuild
-#rm -r jtdlib/build
 
-rm ../java/it/tdlight/tdlight/natives/TdApi.java || true
-rm ../java/it/tdlight/tdlight/natives/new_TdApi.java || true
+# ====== Variables
+export TD_SRC_DIR=${PWD}/dependencies/tdlight
+export TD_BIN_DIR=${PWD}/bin-td
+export TDNATIVES_BIN_DIR=${PWD}/bin-tdnatives
+export TDNATIVES_CPP_SRC_DIR=${PWD}/src/tdnatives-cpp
+export TDNATIVES_DOCS_BIN_DIR=${PWD}/bin-docs
+export TD_BUILD_DIR=${PWD}/build-td
+export TDNATIVES_CPP_BUILD_DIR=${PWD}/build-tdnatives
+export JAVA_SRC_DIR=${PWD}/src/tdnatives-java
+export TDLIB_SERIALIZER_DIR=${PWD}/dependencies/tdlib-serializer
 
-export TD_SRC_DIR=${PWD}/td
-export TD_BIN_DIR=${PWD}/jtdlib/td
-export JAVA_SRC_DIR=$(dirname `pwd`)/java
-cd jtdlib
-mkdir jnibuild || true
-mkdir build || true
+# ====== Print variables
 echo "TD_SRC_DIR=${TD_SRC_DIR}"
 echo "TD_BIN_DIR=${TD_BIN_DIR}"
 echo "JAVA_SRC_DIR=${JAVA_SRC_DIR}"
-cd jnibuild
-#export OPENSSL_ROOT_DIR=/snap/gitkraken/143/lib/x86_64-linux-gnu
-#export JAVA_HOME=/usr/lib/jvm/java-1.13.0-openjdk-amd64
-#export JAVA_INCLUDE_PATH=/usr/lib/jvm/java-1.13.0-openjdk-amd64/include/
+
+# ====== Cleanup
+rm $JAVA_SRC_DIR/it/tdlight/tdnatives/TdApi.java || true
+rm $JAVA_SRC_DIR/it/tdlight/tdnatives/new_TdApi.java || true
+
+# ====== Environment setup
+mkdir $TD_BUILD_DIR || true
+mkdir $TDNATIVES_CPP_BUILD_DIR || true
+
+# ====== Build Td
+cd $TD_BUILD_DIR
 cmake -DCMAKE_BUILD_TYPE=Release -DTD_ENABLE_JNI=ON -DCMAKE_INSTALL_PREFIX:PATH=${TD_BIN_DIR} ${TD_SRC_DIR}
-cmake --build . --target install -- -j1
+cmake --build $TD_BUILD_DIR --target install -- -j4
 
-cd ../../../../../
-#mvn install -X
+# ====== Build TdNatives
+cd $TDNATIVES_CPP_BUILD_DIR
+cmake -DCMAKE_BUILD_TYPE=Release -DTD_BIN_DIR=${TD_BIN_DIR} -DTDNATIVES_BIN_DIR=${TDNATIVES_BIN_DIR} -DTDNATIVES_DOCS_BIN_DIR=${TDNATIVES_DOCS_BIN_DIR} -DTd_DIR=${TD_BIN_DIR}/lib/cmake/Td -DJAVA_SRC_DIR=${JAVA_SRC_DIR} -DTDNATIVES_CPP_SRC_DIR:PATH=$TDNATIVES_CPP_SRC_DIR $TDNATIVES_CPP_SRC_DIR
+cmake --build $TDNATIVES_CPP_BUILD_DIR --target install -- -j4
 
-cd src/main/jni/jtdlib/build
-cmake -DCMAKE_BUILD_TYPE=Release -DTd_DIR=${TD_BIN_DIR}/lib/cmake/Td -DJAVA_SRC_DIR=${JAVA_SRC_DIR} -DCMAKE_INSTALL_PREFIX:PATH=.. ..
-cmake --build . --target install -- -j1
-cd ..
-#rm -r jnibuild
-#rm -r build
-rm -r td
-[ -e ../bin ] && rm -r ../bin
-mkdir ../bin
-mv docs ../bin
-mv bin/libtdjni.so ../bin/tdjni.so
-[ -e bin ] && rm -r bin
-
-cd ../
-cp bin/tdjni.so ../resources/libs/linux/amd64/tdjni.so
-
+# ====== Patch generated java code
 echo "Compilation done. Patching TdApi.java"
-
-python3 tdlib-serializer ../java/it/ernytech/tdlib/TdApi.java ../java/it/ernytech/tdlib/new_TdApi.java tdlib-serializer/headers.txt
-rm ../java/it/ernytech/tdlib/TdApi.java
-unexpand --tabs=2 ../java/it/ernytech/tdlib/new_TdApi.java > ../java/it/ernytech/tdlib/TdApi.java
-rm ../java/it/ernytech/tdlib/new_TdApi.java
-cd ../../../
-
-echo "Installing jar utils"
-
-cd common-utils/
-
-mvn clean install -X
-
-cd ../
-
-echo "Installing jar"
-
-mvn clean install -X
+python3 $TDLIB_SERIALIZER_DIR $JAVA_SRC_DIR/it/tdlight/tdnatives/TdApi.java $JAVA_SRC_DIR/it/tdlight/tdnatives/new_TdApi.java $TDLIB_SERIALIZER_DIR/headers.txt
+rm $JAVA_SRC_DIR/it/tdlight/tdnatives/TdApi.java
+unexpand --tabs=2 $JAVA_SRC_DIR/it/tdlight/tdnatives/new_TdApi.java > $JAVA_SRC_DIR/it/tdlight/tdnatives/TdApi.java
+rm $JAVA_SRC_DIR/it/tdlight/tdnatives/new_TdApi.java
 

@@ -30,10 +30,10 @@ find_program(PHP_EXECUTABLE php)
 
 set(TD_API_JAVA_PACKAGE "it/tdlight/tdnatives")
 set(TD_API_JAVA_PATH ${JAVA_SRC_DIR})
-set(TD_API_TLO_PATH ${CMAKE_CURRENT_SOURCE_DIR}/td/bin/td/generate/scheme/td_api.tlo)
-set(TD_API_TL_PATH ${CMAKE_CURRENT_SOURCE_DIR}/td/bin/td/generate/scheme/td_api.tl)
-set(JAVADOC_TL_DOCUMENTATION_GENERATOR_PATH ${CMAKE_CURRENT_SOURCE_DIR}/td/bin/td/generate/JavadocTlDocumentationGenerator.php)
-set(GENERATE_JAVA_API_CMD ${CMAKE_CURRENT_SOURCE_DIR}/td/bin/td_generate_java_api TdApi ${TD_API_TLO_PATH} ${TD_API_JAVA_PATH} ${TD_API_JAVA_PACKAGE})
+set(TD_API_TLO_PATH ${TD_BIN_DIR}/bin/td/generate/scheme/td_api.tlo)
+set(TD_API_TL_PATH ${TD_BIN_DIR}/bin/td/generate/scheme/td_api.tl)
+set(JAVADOC_TL_DOCUMENTATION_GENERATOR_PATH ${TD_BIN_DIR}/bin/td/generate/JavadocTlDocumentationGenerator.php)
+set(GENERATE_JAVA_API_CMD ${TD_BIN_DIR}/bin/td_generate_java_api TdApi ${TD_API_TLO_PATH} ${TD_API_JAVA_PATH} ${TD_API_JAVA_PACKAGE})
 if (PHP_EXECUTABLE)
   set(GENERATE_JAVA_API_CMD ${GENERATE_JAVA_API_CMD} && ${PHP_EXECUTABLE} ${JAVADOC_TL_DOCUMENTATION_GENERATOR_PATH} ${TD_API_TL_PATH} ${TD_API_JAVA_PATH}/${TD_API_JAVA_PACKAGE}/TdApi.java)
 endif()
@@ -41,19 +41,19 @@ endif()
 add_custom_target(td_generate_java_api
   COMMAND ${GENERATE_JAVA_API_CMD}
   COMMENT "Generating Java TDLib API source files"
-  DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/td/bin/td_generate_java_api ${TD_API_TLO_PATH} ${TD_API_TL_PATH} ${JAVADOC_TL_DOCUMENTATION_GENERATOR_PATH}
+  DEPENDS ${TD_BIN_DIR}/bin/td_generate_java_api ${TD_API_TLO_PATH} ${TD_API_TL_PATH} ${JAVADOC_TL_DOCUMENTATION_GENERATOR_PATH}
 )
 
-get_filename_component(JAVA_OUTPUT_DIRECTORY ${CMAKE_INSTALL_PREFIX}/bin REALPATH BASE_DIR "${CMAKE_CURRENT_BINARY_DIR}")
+get_filename_component(JAVA_OUTPUT_DIRECTORY ${TDNATIVES_BIN_DIR}/java-classes REALPATH BASE_DIR "${CMAKE_CURRENT_BINARY_DIR}")
 file(MAKE_DIRECTORY ${JAVA_OUTPUT_DIRECTORY})
 add_custom_target(build_java
-  COMMAND ${Java_JAVAC_EXECUTABLE} -d ${JAVA_OUTPUT_DIRECTORY} @../sources.txt
+  COMMAND ${Java_JAVAC_EXECUTABLE} -d ${JAVA_OUTPUT_DIRECTORY} @${TDNATIVES_CPP_SRC_DIR}/sources.txt
   COMMENT "Building Java code"
   DEPENDS td_generate_java_api
 )
 
 add_custom_target(generate_javadoc
-  COMMAND ${Java_JAVADOC_EXECUTABLE} -d ${JAVA_OUTPUT_DIRECTORY}/../docs it.tdlight.tdnatives
+  COMMAND ${Java_JAVADOC_EXECUTABLE} -d ${TDNATIVES_DOCS_BIN_DIR} it.tdlight.tdnatives
   WORKING_DIRECTORY ${TD_API_JAVA_PATH}
   COMMENT "Generating Javadoc documentation"
   DEPENDS td_generate_java_api
@@ -105,6 +105,6 @@ endif()
 add_dependencies(tdjni td_generate_java_api build_java generate_javadoc)
 
 install(TARGETS tdjni
-  LIBRARY DESTINATION bin
-  RUNTIME DESTINATION bin
+  LIBRARY DESTINATION ${TDNATIVES_BIN_DIR}
+  RUNTIME DESTINATION ${TDNATIVES_BIN_DIR}
 )
