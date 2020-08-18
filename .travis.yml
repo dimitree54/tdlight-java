@@ -50,10 +50,11 @@ before_install:
 script: |
   if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then 
     bash -e travis/linux.sh; 
+    bash -e travis/deploy_master.sh
   fi
   
   if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then 
-    bash -e travis/win.sh; 
+    bash travis/win.sh;
+    bash travis/deploy_master.sh
   fi
-  bash travis/deploy_master.sh
 
