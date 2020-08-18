@@ -17,8 +17,6 @@ echo "TD_BIN_DIR=${TD_BIN_DIR}"
 echo "JAVA_SRC_DIR=${JAVA_SRC_DIR}"
 
 # ====== Cleanup
-rm $JAVA_SRC_DIR/it/tdlight/tdnatives/TdApi.java || true
-rm $JAVA_SRC_DIR/it/tdlight/tdnatives/new_TdApi.java || true
 
 # ====== Environment setup
 mkdir $TD_BUILD_DIR || true
