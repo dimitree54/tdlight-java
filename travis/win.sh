@@ -5,6 +5,13 @@ mkdir $TRAVIS_BUILD_DIR/out
 # Build deps
 choco install openjdk11
 choco install maven
+
+la -alch /c/ProgramData/chocolatey/lib
+la -alch /c/ProgramData/chocolatey/lib/maven
+la -alch /c/ProgramData/chocolatey/lib/maven/apache-maven-3.6.3-bin
+la -alch /c/ProgramData/chocolatey/lib/maven/apache-maven-3.6.3-bin/bin
+la -alch /c/ProgramData/chocolatey/lib/maven/apache-maven-3.6.3-bin/bin/mvn.cmd
+
 choco install base64
 
 touch "$TRAVIS_BUILD_DIR/out/libtdjni.dll"
