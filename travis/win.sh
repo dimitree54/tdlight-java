@@ -3,7 +3,7 @@
 # Build deps
 choco install gperf 
 choco install strawberryperl 
-choco install openjdk11 -params 'installdir=c:\\java11'
+choco install openjdk11
 
 cd $TRAVIS_BUILD_DIR
 git clone https://github.com/Microsoft/vcpkg.git
@@ -48,7 +48,7 @@ mkdir $TRAVIS_BUILD_DIR/out
 cd jnibuild
 
 # Setup env
-export JAVA_HOME="c:\\java11"
+export JAVA_HOME="C:\\Program Files\\OpenJDK\\openjdk-11.0.8_10"
 
 # Build
 cmake -A x64 -DCMAKE_BUILD_TYPE=Release -DTD_ENABLE_JNI=ON  -DCMAKE_INSTALL_PREFIX:PATH=${TD_BIN_DIR} -DCMAKE_TOOLCHAIN_FILE:FILEPATH=$TRAVIS_BUILD_DIR\\vcpkg\\scripts\\buildsystems\\vcpkg.cmake ${TD_SRC_DIR}
