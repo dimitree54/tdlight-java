@@ -39,7 +39,7 @@ choco install strawberryperl
 cd $TRAVIS_BUILD_DIR
 git clone https://github.com/Microsoft/vcpkg.git
 cd vcpkg
-./bootstrap-vcpkg.bat
+./bootstrap-vcpkg.sh
 ./vcpkg.exe install openssl:x64-windows zlib:x64-windows
 
 # ====== Build Td
