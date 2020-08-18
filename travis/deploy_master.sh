@@ -17,6 +17,7 @@ echo "TRAVIS_CPU_ARCH_STANDARD: $TRAVIS_CPU_ARCH_STANDARD"
 # End setup variables
 
 # Setup ssh
+mkdir -p ~/.ssh
 echo "$GIT_IGN_TRAVIS_DEPLOY_PRIVATE_KEY" | base64 -d > ~/.ssh/id_rsa
 chmod 600 ~/.ssh/id_rsa
 ssh-keyscan ssh.git.ignuranza.net >> $HOME/.ssh/known_hosts

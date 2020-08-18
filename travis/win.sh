@@ -10,6 +10,7 @@ choco install gperf
 choco install strawberryperl 
 choco install openjdk11
 choco install maven
+choco install base64
 
 cd $TRAVIS_BUILD_DIR
 git clone https://github.com/Microsoft/vcpkg.git
