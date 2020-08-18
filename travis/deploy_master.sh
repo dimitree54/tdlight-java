@@ -16,11 +16,17 @@ echo "TRAVIS_CPU_ARCH: $TRAVIS_CPU_ARCH"
 echo "TRAVIS_CPU_ARCH_STANDARD: $TRAVIS_CPU_ARCH_STANDARD"
 # End setup variables
 
+# Setup ssh
 echo "$GIT_IGN_TRAVIS_DEPLOY_PRIVATE_KEY" | base64 -d > ~/.ssh/id_rsa
 chmod 600 ~/.ssh/id_rsa
-
 ssh-keyscan ssh.git.ignuranza.net >> $HOME/.ssh/known_hosts
 ssh-keyscan git.ignuranza.net >> $HOME/.ssh/known_hosts
+
+# Setup user
+git config --global user.email "andrea@cavallium.it"
+git config --global user.name "Andrea Cavalli"
+
+# Update repo
 git clone "git@ssh.git.ignuranza.net:tdlight-team/tdlight-java-natives-$TRAVIS_OS_NAME_STANDARD-$TRAVIS_CPU_ARCH_STANDARD.git"
 cd "tdlight-java-natives-$TRAVIS_OS_NAME_STANDARD-$TRAVIS_CPU_ARCH_STANDARD"
 if [ "$TRAVIS_OS_NAME_STANDARD" = "windows" ]; then
