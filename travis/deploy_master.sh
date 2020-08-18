@@ -1,6 +1,7 @@
 #!/bin/bash -e
 
 # Setup variables
+sudo apt install maven
 export MAVEN_OPTS="--add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/sun.nio.ch=ALL-UNNAMED --add-opens java.base/java.lang.reflect=ALL-UNNAMED --add-opens java.base/javax.crypto=ALL-UNNAMED --add-opens java.base/java.io=ALL-UNNAMED"
 
 if [ "$TRAVIS_CPU_ARCH" = "arm64" ]; then
