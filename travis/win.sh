@@ -2,15 +2,17 @@
 
 mkdir $TRAVIS_BUILD_DIR/out
 
-touch "$TRAVIS_BUILD_DIR/out/lib-$TRAVIS_OS_NAME-$TRAVIS_CPU_ARCH"
+# Build deps
+choco install openjdk11
+choco install maven
+choco install base64
+
+touch "$TRAVIS_BUILD_DIR/out/libtdjni.dll"
 exit 0
 
 # Build deps
 choco install gperf 
 choco install strawberryperl 
-choco install openjdk11
-choco install maven
-choco install base64
 
 cd $TRAVIS_BUILD_DIR
 git clone https://github.com/Microsoft/vcpkg.git
