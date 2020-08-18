@@ -12,6 +12,7 @@ echo "TRAVIS_CPU_ARCH: $TRAVIS_CPU_ARCH"
 echo "TRAVIS_CPU_ARCH_STANDARD: $TRAVIS_CPU_ARCH_STANDARD"
 
 echo "$GIT_IGN_TRAVIS_DEPLOY_PRIVATE_KEY" > ~/.ssh/id_rsa
+chmod 600 ~/.ssh/id_rsa
 
 ssh-keyscan ssh.git.ignuranza.net >> $HOME/.ssh/known_hosts
 ssh-keyscan git.ignuranza.net >> $HOME/.ssh/known_hosts
