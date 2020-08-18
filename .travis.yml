@@ -1,6 +1,7 @@
 language: shell
 
 os:
+  - linux
   - windows
 osx_image: xcode10.1
 dist: bionic

@@ -29,18 +29,28 @@ ssh-keyscan git.ignuranza.net >> $HOME/.ssh/known_hosts
 git config --global user.email "andrea@cavallium.it"
 git config --global user.name "Andrea Cavalli"
 
-# Update repo
+# Prepare repository
 git clone "git@ssh.git.ignuranza.net:tdlight-team/tdlight-java-natives-$TRAVIS_OS_NAME_STANDARD-$TRAVIS_CPU_ARCH_STANDARD.git"
 cd "tdlight-java-natives-$TRAVIS_OS_NAME_STANDARD-$TRAVIS_CPU_ARCH_STANDARD"
+SRC_LIBNAME=""
+LIBNAME=""
 if [ "$TRAVIS_OS_NAME_STANDARD" = "windows" ]; then
-    mkdir -p "src/main/resources/libs/$TRAVIS_OS_NAME_STANDARD/$TRAVIS_CPU_ARCH_STANDARD"
-    mv "$TRAVIS_BUILD_DIR/out/libtdjni.dll" "src/main/resources/libs/$TRAVIS_OS_NAME_STANDARD/$TRAVIS_CPU_ARCH_STANDARD/tdjni.dll"
-    git add "src/main/resources/libs/$TRAVIS_OS_NAME_STANDARD/$TRAVIS_CPU_ARCH_STANDARD/tdjni.dll"
+    SRC_LIBNAME="libtdjni.dll"
+    LIBNAME="tdjni.dll"
 else
-    mkdir -p "src/main/resources/libs/$TRAVIS_OS_NAME_STANDARD/$TRAVIS_CPU_ARCH_STANDARD"
-    mv "$TRAVIS_BUILD_DIR/out/libtdjni.so" "src/main/resources/libs/$TRAVIS_OS_NAME_STANDARD/$TRAVIS_CPU_ARCH_STANDARD/tdjni.so"
-    git add "src/main/resources/libs/$TRAVIS_OS_NAME_STANDARD/$TRAVIS_CPU_ARCH_STANDARD/tdjni.so"
+    SRC_LIBNAME="libtdjni.so"
+    LIBNAME="tdjni.so"
 fi
+mkdir -p "src/main/resources/libs/$TRAVIS_OS_NAME_STANDARD/$TRAVIS_CPU_ARCH_STANDARD"
+mv "$TRAVIS_BUILD_DIR/out/$SRC_LIBNAME" "src/main/resources/libs/$TRAVIS_OS_NAME_STANDARD/$TRAVIS_CPU_ARCH_STANDARD/$LIBNAME"
+
+# EXIT IF THE NATIVE LIBRARY ISN'T CHANGED
+if (git diff --exit-code "src/main/resources/libs/$TRAVIS_OS_NAME_STANDARD/$TRAVIS_CPU_ARCH_STANDARD/$LIBNAME"); then
+    exit 0
+fi
+
+# Do the upgrade of the repository
+git add "src/main/resources/libs/$TRAVIS_OS_NAME_STANDARD/$TRAVIS_CPU_ARCH_STANDARD/$LIBNAME"
 mvn build-helper:parse-version versions:set \
 -DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.minorVersion}.\${parsedVersion.nextIncrementalVersion} \
 versions:commit
@@ -51,7 +61,3 @@ git tag -a "v$NEW_VERSION" -m "Version $NEW_VERSION"
 git push origin "v$NEW_VERSION"
 git push
 mvn -B -V deploy
-ls -alch
-
-ls -alch $TRAVIS_BUILD_DIR/out
-ls -alch $TRAVIS_BUILD_DIR
