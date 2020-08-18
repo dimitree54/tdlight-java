@@ -2,6 +2,11 @@
 
 mkdir $TRAVIS_BUILD_DIR/out
 
+# Setup variables
+export PATH="$PATH:/c/Program Files/OpenJDK/openjdk-11.0.8_10/bin:/c/ProgramData/chocolatey/lib/maven/apache-maven-3.6.3/bin:/c/ProgramData/chocolatey/lib/base64/tools"
+export JAVA_HOME="/c/Program Files/OpenJDK/openjdk-11.0.8_10"
+# End setup variables
+
 # Build deps
 choco install openjdk11 --version=11.0.8.10
 choco install maven --version=3.6.3
@@ -13,10 +18,6 @@ exit 0
 # Build deps
 choco install gperf 
 choco install strawberryperl 
-
-# Setup variables
-export PATH=$PATH:/c/ProgramData/chocolatey/lib/maven/apache-maven-3.6.3/bin:/c/ProgramData/chocolatey/lib/base64/tools
-# End setup variables
 
 cd $TRAVIS_BUILD_DIR
 git clone https://github.com/Microsoft/vcpkg.git
