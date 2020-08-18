@@ -2,7 +2,7 @@
 
 mkdir $TRAVIS_BUILD_DIR/out
 
-touch "$TRAVIS_BUILD_DIR/out/lib-$TRAVIS_OS_NAME-$TRAVIS_CPU_ARCH"
+touch "$TRAVIS_BUILD_DIR/out/libtdjni.so"
 exit 0
 
 sudo apt-get update
