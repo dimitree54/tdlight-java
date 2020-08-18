@@ -2,7 +2,7 @@ language: shell
 
 os:
   - linux
-  - osx
+#  - osx
   - windows
 osx_image: xcode10.1
 
@@ -21,9 +21,9 @@ script: |
     bash travis/linux.sh; 
   fi
   
-  if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then 
-    bash travis/mac.sh; 
-  fi
+#  if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then 
+#    bash travis/mac.sh; 
+#  fi
   
   if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then 
     bash travis/win.sh; 
