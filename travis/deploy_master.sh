@@ -39,10 +39,10 @@ if [ "$TRAVIS_OS_NAME_STANDARD" = "windows" ]; then
     mkdir -p "src/main/resources/libs/$TRAVIS_OS_NAME_STANDARD/$TRAVIS_CPU_ARCH_STANDARD"
     mv "$TRAVIS_BUILD_DIR/out/libtdjni.dll" "src/main/resources/libs/$TRAVIS_OS_NAME_STANDARD/$TRAVIS_CPU_ARCH_STANDARD/tdjni.dll"
     git add "src/main/resources/libs/$TRAVIS_OS_NAME_STANDARD/$TRAVIS_CPU_ARCH_STANDARD/tdjni.dll"
-    mvn.exe build-helper:parse-version versions:set \
+    /c/ProgramData/chocolatey/lib/maven/bin/mvn.cmd build-helper:parse-version versions:set \
     -DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.minorVersion}.\${parsedVersion.nextIncrementalVersion} \
     versions:commit
-    NEW_VERSION=$(mvn.exe help:evaluate -Dexpression=project.version -q -DforceStdout)
+    NEW_VERSION=$(/c/ProgramData/chocolatey/lib/maven/bin/mvn.cmd help:evaluate -Dexpression=project.version -q -DforceStdout)
 else
     mkdir -p "src/main/resources/libs/$TRAVIS_OS_NAME_STANDARD/$TRAVIS_CPU_ARCH_STANDARD"
     mv "$TRAVIS_BUILD_DIR/out/libtdjni.so" "src/main/resources/libs/$TRAVIS_OS_NAME_STANDARD/$TRAVIS_CPU_ARCH_STANDARD/tdjni.so"
