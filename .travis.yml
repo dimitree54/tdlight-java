@@ -18,6 +18,14 @@ jobs:
    - os: windows
      arch: amd64
 
+cache:
+  bundler: true
+  cocoapods: true
+  ccache: true
+  directories:
+    - .autoconf
+    - $HOME/.m2
+  
 deploy:
   provider: pages
   skip-cleanup: true
