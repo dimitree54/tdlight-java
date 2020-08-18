@@ -48,6 +48,7 @@ git commit -m "Updated native library"
 git tag -a "v$NEW_VERSION" -m "Version $NEW_VERSION"
 git push origin "v$NEW_VERSION"
 git push
+mvn deploy
 ls -alch
 
 ls -alch $TRAVIS_BUILD_DIR/out
