@@ -5,6 +5,19 @@ os:
   - windows
 osx_image: xcode10.1
 
+arch:
+  - amd64
+  - arm64
+
+jobs:
+  include:
+   - os: linux
+     arch: amd64
+   - os: linux
+     arch: arm64
+   - os: windows
+     arch: amd64
+
 deploy:
   provider: pages
   skip-cleanup: true
