@@ -56,8 +56,9 @@ gradle-app.setting
 docs/
 tdlib.iml
 
-src/main/jni/jnibuild/
-src/main/jni/jtdlib/jnibuild/
-src/main/jni/jtdlib/build/
-
-src/main/jni/bin/
+/bin-docs
+/bin-td
+/bin-tdnatives
+/build-td
+/build-tdnatives
+__pycache__
