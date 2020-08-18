@@ -3,7 +3,7 @@
 mkdir $TRAVIS_BUILD_DIR/out
 
 # Build deps
-choco install openjdk11
+choco install openjdk11 --version=11.0.8.10
 choco install maven --version=3.6.3
 choco install base64
 

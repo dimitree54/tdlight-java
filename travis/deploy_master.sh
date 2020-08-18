@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 # Setup variables
-export PATH=$PATH:/c/ProgramData/chocolatey/lib/maven/apache-maven-3.6.3-bin/bin:/c/ProgramData/chocolatey/lib/base64/tools
+export PATH=$PATH:/c/ProgramData/chocolatey/lib/maven/apache-maven-3.6.3/bin:/c/ProgramData/chocolatey/lib/base64/tools
 export MAVEN_OPTS="--add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/sun.nio.ch=ALL-UNNAMED --add-opens java.base/java.lang.reflect=ALL-UNNAMED --add-opens java.base/javax.crypto=ALL-UNNAMED --add-opens java.base/java.io=ALL-UNNAMED"
 
 if [ "$TRAVIS_CPU_ARCH" = "arm64" ]; then
