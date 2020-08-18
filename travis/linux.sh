@@ -5,9 +5,9 @@ mkdir $TRAVIS_BUILD_DIR/out
 touch "$TRAVIS_BUILD_DIR/out/libtdjni.so"
 exit 0
 
-sudo apt-get update
+#sudo apt-get update
 #sudo apt-get upgrade
-sudo apt-get install make git zlib1g-dev libssl-dev gperf php cmake default-jdk g++ ccache
+#sudo apt-get install make git zlib1g-dev libssl-dev gperf php cmake default-jdk g++ ccache maven
 
 cd src/main/jni
 

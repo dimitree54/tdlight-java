@@ -4,6 +4,21 @@ os:
   - linux
   - windows
 osx_image: xcode10.1
+dist: bionic
+addons:
+  apt:
+    packages:
+    - make
+    - git
+    - zlib1g-dev
+    - libssl-dev
+    - gperf
+    - php
+    - cmake
+    - default-jdk
+    - g++
+    - ccache
+    - maven
 
 arch:
   - amd64
