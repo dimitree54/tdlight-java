@@ -12,6 +12,8 @@ endif()
 find_package(Td REQUIRED)
 
 if (NOT JNI_FOUND)
+  set(JAVA_AWT_LIBRARY NotNeeded)
+  set(JAVA_AWT_INCLUDE_PATH NotNeeded)
   find_package(JNI REQUIRED)
 endif()
 message(STATUS "Found JNI: ${JNI_INCLUDE_DIRS} ${JNI_LIBRARIES}")

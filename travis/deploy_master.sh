@@ -1,8 +1,15 @@
 #!/bin/bash -e
 
 # Setup variables
-export PATH="$PATH:/c/Program Files/OpenJDK/openjdk-11.0.8_10/bin:/c/ProgramData/chocolatey/lib/maven/apache-maven-3.6.3/bin:/c/ProgramData/chocolatey/lib/base64/tools"
-export JAVA_HOME="/c/Program Files/OpenJDK/openjdk-11.0.8_10"
+if [ "$TRAVIS_OS_NAME_STANDARD" = "windows" ]; then
+    export PATH="$PATH:/c/Program Files/OpenJDK/openjdk-11.0.8_10/bin:/c/ProgramData/chocolatey/lib/maven/apache-maven-3.6.3/bin:/c/ProgramData/chocolatey/lib/base64/tools"
+    export JAVA_HOME="/c/Program Files/OpenJDK/openjdk-11.0.8_10"
+    export JAVA_INCLUDE_PATH="/c/Program Files/OpenJDK/openjdk-11.0.8_10/include"
+else
+    export PATH="$PATH:/usr/lib/jvm/java-11-openjdk-$(dpkg --print-architecture)/bin"
+    export JAVA_HOME="/usr/lib/jvm/java-11-openjdk-$(dpkg --print-architecture)"
+    export JAVA_INCLUDE_PATH="/usr/lib/jvm/java-11-openjdk-$(dpkg --print-architecture)/include"
+fi
 export MAVEN_OPTS="--add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/sun.nio.ch=ALL-UNNAMED --add-opens java.base/java.lang.reflect=ALL-UNNAMED --add-opens java.base/javax.crypto=ALL-UNNAMED --add-opens java.base/java.io=ALL-UNNAMED"
 
 if [ "$TRAVIS_CPU_ARCH" = "arm64" ]; then
