@@ -14,6 +14,10 @@ exit 0
 choco install gperf 
 choco install strawberryperl 
 
+# Setup variables
+export PATH=$PATH:/mnt/c/ProgramData/chocolatey/lib/maven/bin
+# End setup variables
+
 cd $TRAVIS_BUILD_DIR
 git clone https://github.com/Microsoft/vcpkg.git
 cd vcpkg
