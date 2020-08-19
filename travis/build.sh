@@ -2,7 +2,7 @@
 set -e
 
 # ====== Setup environment variables
-./setup_variables.sh
+./travis/setup_variables.sh
 
 # ====== Build Td
 cd $TD_BUILD_DIR
