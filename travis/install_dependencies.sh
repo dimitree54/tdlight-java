@@ -16,11 +16,11 @@ source ./travis/setup_variables.sh
 if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
   echo "Linux"
   if [ "$TRAVIS_CPU_ARCH" = "arm64" ]; then
-    sudo dd if=/dev/zero of=$TRAVIS_BUILD_DIR/myswap.img bs=4096 count=1048576
-    #sudo fallocate -l 4G /myswap.img
-    sudo mkswap $TRAVIS_BUILD_DIR/myswap.img
-    sudo chmod 0600 $TRAVIS_BUILD_DIR/myswap.img
+    #sudo dd if=/dev/zero of=$TRAVIS_BUILD_DIR/myswap.img bs=4096 count=1048576
+    sudo fallocate -l 4G $TRAVIS_BUILD_DIR/myswap.img
     sudo chown root:root $TRAVIS_BUILD_DIR/myswap.img
+    sudo chmod 0600 $TRAVIS_BUILD_DIR/myswap.img
+    sudo mkswap $TRAVIS_BUILD_DIR/myswap.img
     sudo swapon $TRAVIS_BUILD_DIR/myswap.img
   fi
 elif [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
