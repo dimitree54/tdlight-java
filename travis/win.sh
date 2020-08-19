@@ -17,7 +17,7 @@ echo "TD_BIN_DIR=${TD_BIN_DIR}"
 echo "JAVA_SRC_DIR=${JAVA_SRC_DIR}"
 
 # ====== OS Variables
-export PATH="$PATH:/c/Program Files/OpenJDK/openjdk-11.0.8_10/bin:/c/ProgramData/chocolatey/lib/maven/apache-maven-3.6.3/bin:/c/ProgramData/chocolatey/lib/base64/tools"
+export PATH="$PATH:/c/Program Files/OpenJDK/openjdk-11.0.8_10/bin:/c/ProgramData/chocolatey/lib/maven/apache-maven-3.6.3/bin:/c/ProgramData/chocolatey/lib/base64/tools:/c/ProgramData/chocolatey/lib/nasm/tools"
 export JAVA_HOME="/c/Program Files/OpenJDK/openjdk-11.0.8_10"
 
 # ====== Cleanup
@@ -31,8 +31,9 @@ mkdir $TDNATIVES_CPP_BUILD_DIR || true
 choco install openjdk11 --version=11.0.8.10
 choco install maven --version=3.6.3
 choco install base64
-choco install gperf 
-choco install strawberryperl 
+choco install gperf
+choco install strawberryperl
+choco install nasm
 
 # Install OpenSSL and ZLib
 cd $TRAVIS_BUILD_DIR
