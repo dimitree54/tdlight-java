@@ -56,6 +56,7 @@ ssh-keyscan git.ignuranza.net >> $HOME/.ssh/known_hosts
 # Setup user
 git config --global user.email "andrea@cavallium.it"
 git config --global user.name "Andrea Cavalli"
+git config pull.rebase false
 
 # Prepare repository
 cd $TRAVIS_BUILD_DIR
@@ -91,10 +92,9 @@ if ! (git diff --exit-code "src/main/resources/libs/$TRAVIS_OS_NAME_SHORT/$TRAVI
     # Upgrade the dependency of tdlight-java
     cd $TRAVIS_BUILD_DIR
 	rm -r tdlight-java || true
-    git clone --depth=1 -b master --single-branch git@ssh.git.ignuranza.net:tdlight-team/tdlight-java.git || true
+    git clone --depth=1 -b master --single-branch git@ssh.git.ignuranza.net:tdlight-team/tdlight-java.git
 	cd $TRAVIS_BUILD_DIR/tdlight-java
 	git checkout master
-	git pull
     mvn versions:use-latest-releases -Dincludes=it.tdlight:tdlight-natives-$TRAVIS_OS_NAME_STANDARD-$TRAVIS_CPU_ARCH_STANDARD
     rm pom.xml.versionsBackup
     git add pom.xml
@@ -120,7 +120,6 @@ if [ "$TRAVIS_OS_NAME_STANDARD" = "linux" ]; then
     	git clone --depth=1 -b master --single-branch git@ssh.git.ignuranza.net:tdlight-team/tdlight-java.git
         cd $TRAVIS_BUILD_DIR/tdlight-java
 		git checkout master
-		git pull
         cp $JAVA_SRC_DIR/it/tdlight/tdnatives/TdApi.java $TRAVIS_BUILD_DIR/tdlight-java/src/main/java/it/tdlight/tdnatives/TdApi.java
 
         # IF TdApi.java IS CHANGED
