@@ -19,8 +19,8 @@ echo "JAVA_SRC_DIR=${JAVA_SRC_DIR}"
 # ====== Cleanup
 
 # ====== Environment setup
-mkdir $TD_BUILD_DIR || true
-mkdir $TDNATIVES_CPP_BUILD_DIR || true
+[ -d $TD_BUILD_DIR ] || mkdir $TD_BUILD_DIR
+[ -d $TDNATIVES_CPP_BUILD_DIR ] || mkdir $TDNATIVES_CPP_BUILD_DIR
 
 # ====== Build Td
 cd $TD_BUILD_DIR

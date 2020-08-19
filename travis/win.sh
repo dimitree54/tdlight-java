@@ -17,20 +17,20 @@ echo "TD_BIN_DIR=${TD_BIN_DIR}"
 echo "JAVA_SRC_DIR=${JAVA_SRC_DIR}"
 
 # ====== OS Variables
-export PATH="$PATH:/c/Program Files/OpenJDK/openjdk-11.0.8_10/bin:/C/Program Files/CMake/bin:/c/ProgramData/chocolatey/bin:/c/ProgramData/chocolatey/lib/maven/apache-maven-3.6.3/bin:/c/ProgramData/chocolatey/lib/base64/tools:/c/Program Files/NASM"
+export PATH="$PATH:/c/Program Files (x86)/Microsoft Visual Studio/2019/BuildTools/VC/Tools/MSVC/14.27.29110/bin/Hostx64/x64:/c/Program Files/OpenJDK/openjdk-11.0.8_10/bin:/c/Program Files/CMake/bin:/c/ProgramData/chocolatey/bin:/c/Program Files/apache-maven-3.6.3/bin:/c/ProgramData/chocolatey/lib/maven/apache-maven-3.6.3/bin:/c/ProgramData/chocolatey/lib/base64/tools:/c/Program Files/NASM"
 export JAVA_HOME="/c/Program Files/OpenJDK/openjdk-11.0.8_10"
 export VCPKG_DIR=$TRAVIS_BUILD_DIR/vcpkg
 
 # ====== Cleanup
-rm $JAVA_SRC_DIR/it/tdlight/tdnatives/TdApi.java || true
-rm $JAVA_SRC_DIR/it/tdlight/tdnatives/new_TdApi.java || true
+[ -f $JAVA_SRC_DIR/it/tdlight/tdnatives/TdApi.java ] && rm $JAVA_SRC_DIR/it/tdlight/tdnatives/TdApi.java
+[ -f $JAVA_SRC_DIR/it/tdlight/tdnatives/new_TdApi.java ] && rm $JAVA_SRC_DIR/it/tdlight/tdnatives/new_TdApi.java
 
 # ====== Environment setup
-mkdir -p $TRAVIS_BUILD_DIR/out || true
-mkdir $TD_BUILD_DIR || true
-mkdir $TDNATIVES_CPP_BUILD_DIR || true
+[ -d $TRAVIS_BUILD_DIR/out ] || mkdir -p $TRAVIS_BUILD_DIR/out
+[ -d $TD_BUILD_DIR ] || mkdir $TD_BUILD_DIR
+[ -d $TDNATIVES_CPP_BUILD_DIR ] || mkdir $TDNATIVES_CPP_BUILD_DIR
 choco install ccache
-choco install visualstudio2019buildtools --package-parameters "--add Microsoft.VisualStudio.Component.VC.Tools.x86.x64"
+choco install visualstudio2019buildtools --version=16.7.0.0 --package-parameters "--add Microsoft.VisualStudio.Component.VC.Tools.x86.x64"
 choco install openjdk11 --version=11.0.8.10
 choco install maven --version=3.6.3
 choco install base64

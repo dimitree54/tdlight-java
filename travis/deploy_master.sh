@@ -17,7 +17,7 @@ echo "TD_BIN_DIR=${TD_BIN_DIR}"
 echo "JAVA_SRC_DIR=${JAVA_SRC_DIR}"
 
 if [ "$TRAVIS_OS_NAME" = "windows" ]; then
-    export PATH="$PATH:/c/Program Files/OpenJDK/openjdk-11.0.8_10/bin:/c/ProgramData/chocolatey/lib/maven/apache-maven-3.6.3/bin:/c/ProgramData/chocolatey/lib/base64/tools"
+	export PATH="$PATH:/c/Program Files (x86)/Microsoft Visual Studio/2019/BuildTools/VC/Tools/MSVC/14.27.29110/bin/Hostx64/x64:/c/Program Files/OpenJDK/openjdk-11.0.8_10/bin:/c/Program Files/CMake/bin:/c/ProgramData/chocolatey/bin:/c/Program Files/apache-maven-3.6.3/bin:/c/ProgramData/chocolatey/lib/maven/apache-maven-3.6.3/bin:/c/ProgramData/chocolatey/lib/base64/tools:/c/Program Files/NASM"
     export JAVA_HOME="/c/Program Files/OpenJDK/openjdk-11.0.8_10"
     export JAVA_INCLUDE_PATH="/c/Program Files/OpenJDK/openjdk-11.0.8_10/include"
 else
@@ -91,12 +91,12 @@ if ! (git diff --exit-code "src/main/resources/libs/$TRAVIS_OS_NAME_SHORT/$TRAVI
 
     # Upgrade the dependency of tdlight-java
     cd $TRAVIS_BUILD_DIR
-	rm -r tdlight-java || true
+	[ -d tdlight-java ] && rm -r tdlight-java
     git clone --depth=1 -b master --single-branch git@ssh.git.ignuranza.net:tdlight-team/tdlight-java.git
 	cd $TRAVIS_BUILD_DIR/tdlight-java
 	git checkout master
     mvn versions:use-latest-releases -Dincludes=it.tdlight:tdlight-natives-$TRAVIS_OS_NAME_STANDARD-$TRAVIS_CPU_ARCH_STANDARD
-    rm pom.xml.versionsBackup
+    [ -f pom.xml.versionsBackup ] && rm pom.xml.versionsBackup
     git add pom.xml
     git commit -m "Upgrade $TRAVIS_OS_NAME_STANDARD-$TRAVIS_CPU_ARCH_STANDARD natives"
     git push
@@ -116,7 +116,7 @@ if [ "$TRAVIS_OS_NAME_STANDARD" = "linux" ]; then
         
    		# Upgrade the file of tdlight-java
 		cd $TRAVIS_BUILD_DIR
-		rm -r tdlight-java || true
+		[ -d tdlight-java ] && rm -r tdlight-java
     	git clone --depth=1 -b master --single-branch git@ssh.git.ignuranza.net:tdlight-team/tdlight-java.git
         cd $TRAVIS_BUILD_DIR/tdlight-java
 		git checkout master
