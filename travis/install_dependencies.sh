@@ -15,6 +15,13 @@ source ./travis/setup_variables.sh
 
 if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
   echo "Linux"
+  if [ "$TRAVIS_CPU_ARCH" = "arm64" ]; then
+    fallocate l- 4G /myswap.img
+    mkswap swap.img
+    chmod 0600 myswap.img
+    sudo chown root:root /myswap.img
+    swapon swap.img
+  fi
 elif [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
   echo "Windows"
   choco install ccache

@@ -12,15 +12,13 @@ export TDNATIVES_CPP_BUILD_DIR=${PWD}/build-tdnatives
 export JAVA_SRC_DIR=${PWD}/src/tdnatives-java
 export TDLIB_SERIALIZER_DIR=${PWD}/dependencies/tdlib-serializer
 export MAVEN_OPTS="--add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/sun.nio.ch=ALL-UNNAMED --add-opens java.base/java.lang.reflect=ALL-UNNAMED --add-opens java.base/javax.crypto=ALL-UNNAMED --add-opens java.base/java.io=ALL-UNNAMED"
-if [ "$TRAVIS_CPU_ARCH" = "aarch64" ]; then
-    export TRAVIS_CPU_ARCH_JAVA="arm64"
-else
-    export TRAVIS_CPU_ARCH_JAVA="${TRAVIS_CPU_ARCH,,}"
-fi
+export TRAVIS_CPU_ARCH_JAVA="${TRAVIS_CPU_ARCH,,}"
 if [ "$TRAVIS_CPU_ARCH" = "arm64" ]; then
     export TRAVIS_CPU_ARCH_STANDARD="aarch64"
+    export TRAVIS_CPU_CORES="1"
 else
     export TRAVIS_CPU_ARCH_STANDARD="${TRAVIS_CPU_ARCH,,}"
+    export TRAVIS_CPU_CORES="2"
 fi
 export TRAVIS_OS_NAME_STANDARD="${TRAVIS_OS_NAME,,}"
 if [ "$TRAVIS_OS_NAME_STANDARD" = "windows" ]; then
