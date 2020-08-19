@@ -51,6 +51,7 @@ deploy:
 #    script: "mvn -B -V deploy"
 
 script: |
+  set -e
   if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then 
     bash -e travis/linux.sh && bash -e travis/deploy_master.sh
   fi

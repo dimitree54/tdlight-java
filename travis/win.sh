@@ -1,4 +1,5 @@
 #!/bin/bash -e
+set -e
 
 # ====== Variables
 export TD_SRC_DIR=${PWD}/dependencies/tdlight

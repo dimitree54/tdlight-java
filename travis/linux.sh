@@ -1,4 +1,5 @@
 #!/bin/bash -e
+set -e
 
 # ====== Variables
 export TD_SRC_DIR=${PWD}/dependencies/tdlight
@@ -38,7 +39,7 @@ echo "JAVA_INCLUDE_PATH=${JAVA_INCLUDE_PATH}"
 # ====== Build Td
 cd $TD_BUILD_DIR
 cmake -DCMAKE_BUILD_TYPE=Release -DTD_ENABLE_JNI=ON -DCMAKE_INSTALL_PREFIX:PATH=${TD_BIN_DIR} ${TD_SRC_DIR}
-cmake --build $TD_BUILD_DIR --target install -- j4
+cmake --build $TD_BUILD_DIR --target install -- -j4
 
 # ====== Build TdNatives
 cd $TDNATIVES_CPP_BUILD_DIR
