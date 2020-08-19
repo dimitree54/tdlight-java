@@ -16,7 +16,7 @@ echo "TD_SRC_DIR=${TD_SRC_DIR}"
 echo "TD_BIN_DIR=${TD_BIN_DIR}"
 echo "JAVA_SRC_DIR=${JAVA_SRC_DIR}"
 
-if [ "$TRAVIS_OS_NAME_STANDARD" = "windows" ]; then
+if [ "$TRAVIS_OS_NAME" = "windows" ]; then
     export PATH="$PATH:/c/Program Files/OpenJDK/openjdk-11.0.8_10/bin:/c/ProgramData/chocolatey/lib/maven/apache-maven-3.6.3/bin:/c/ProgramData/chocolatey/lib/base64/tools"
     export JAVA_HOME="/c/Program Files/OpenJDK/openjdk-11.0.8_10"
     export JAVA_INCLUDE_PATH="/c/Program Files/OpenJDK/openjdk-11.0.8_10/include"
@@ -33,9 +33,15 @@ else
     export TRAVIS_CPU_ARCH_STANDARD="${TRAVIS_CPU_ARCH,,}"
 fi
 export TRAVIS_OS_NAME_STANDARD="${TRAVIS_OS_NAME,,}"
+if [ "$TRAVIS_OS_NAME_STANDARD" = "windows" ]; then
+	export TRAVIS_OS_NAME_SHORT="win"
+else
+	export TRAVIS_OS_NAME_SHORT=$TRAVIS_OS_NAME_STANDARD
+fi
 
 echo "TRAVIS_OS_NAME: $TRAVIS_OS_NAME"
 echo "TRAVIS_OS_NAME_STANDARD: $TRAVIS_OS_NAME_STANDARD"
+echo "TRAVIS_OS_NAME_SHORT: $TRAVIS_OS_NAME_SHORT"
 echo "TRAVIS_CPU_ARCH: $TRAVIS_CPU_ARCH"
 echo "TRAVIS_CPU_ARCH_STANDARD: $TRAVIS_CPU_ARCH_STANDARD"
 # End setup variables
@@ -64,13 +70,13 @@ else
     SRC_LIBNAME="libtdjni.so"
     LIBNAME="tdjni.so"
 fi
-mkdir -p "src/main/resources/libs/$TRAVIS_OS_NAME_STANDARD/$TRAVIS_CPU_ARCH_STANDARD"
-mv "$TRAVIS_BUILD_DIR/out/$SRC_LIBNAME" "src/main/resources/libs/$TRAVIS_OS_NAME_STANDARD/$TRAVIS_CPU_ARCH_STANDARD/$LIBNAME"
+mkdir -p "src/main/resources/libs/$TRAVIS_OS_NAME_SHORT/$TRAVIS_CPU_ARCH_STANDARD"
+mv "$TRAVIS_BUILD_DIR/out/$SRC_LIBNAME" "src/main/resources/libs/$TRAVIS_OS_NAME_SHORT/$TRAVIS_CPU_ARCH_STANDARD/$LIBNAME"
 
 # IF THE NATIVE LIBRARY IS CHANGED
-if ! (git diff --exit-code "src/main/resources/libs/$TRAVIS_OS_NAME_STANDARD/$TRAVIS_CPU_ARCH_STANDARD/$LIBNAME"); then
+if ! (git diff --exit-code "src/main/resources/libs/$TRAVIS_OS_NAME_SHORT/$TRAVIS_CPU_ARCH_STANDARD/$LIBNAME"); then
     # Do the upgrade of the repository
-    git add "src/main/resources/libs/$TRAVIS_OS_NAME_STANDARD/$TRAVIS_CPU_ARCH_STANDARD/$LIBNAME"
+    git add "src/main/resources/libs/$TRAVIS_OS_NAME_SHORT/$TRAVIS_CPU_ARCH_STANDARD/$LIBNAME"
     mvn build-helper:parse-version versions:set \
     -DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.minorVersion}.\${parsedVersion.nextIncrementalVersion} \
     versions:commit
