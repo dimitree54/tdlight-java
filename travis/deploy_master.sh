@@ -111,8 +111,10 @@ if [ "$TRAVIS_OS_NAME_STANDARD" = "linux" ]; then
         unexpand --tabs=2 $JAVA_SRC_DIR/it/tdlight/tdnatives/new_TdApi.java > $JAVA_SRC_DIR/it/tdlight/tdnatives/TdApi.java
         rm $JAVA_SRC_DIR/it/tdlight/tdnatives/new_TdApi.java
         
+   		# Upgrade the file of tdlight-java
+		cd $TRAVIS_BUILD_DIR
     	git clone --depth=1 -b master --single-branch git@ssh.git.ignuranza.net:tdlight-team/tdlight-java.git || true
-        cd $TRAVIS_BUILD_DIR/tdlight-java
+        cd tdlight-java
         git pull
         cp $JAVA_SRC_DIR/it/tdlight/tdnatives/TdApi.java src/main/java/it/tdlight/tdnatives/TdApi.java
 
