@@ -30,13 +30,13 @@ mkdir -p $TRAVIS_BUILD_DIR/out || true
 mkdir $TD_BUILD_DIR || true
 mkdir $TDNATIVES_CPP_BUILD_DIR || true
 choco install ccache
+choco install visualstudio2019buildtools --package-parameters "--add Microsoft.VisualStudio.Component.VC.Tools.x86.x64"
 choco install openjdk11 --version=11.0.8.10
 choco install maven --version=3.6.3
 choco install base64
 choco install gperf
 choco install strawberryperl
 choco install nasm
-choco install visualstudio2019buildtools --package-parameters "--allWorkloads --includeRecommended --passive --locale en-US"
 
 git clone -b windows-amd64-prebuilt-libraries --single-branch https://github.com/tdlight-team/tdlight-java windowsenv
 mv windowsenv/vcpkg $VCPKG_DIR
