@@ -51,6 +51,8 @@ deploy:
     email: andrea@cavallium.it
     name: "Andrea Cavalli"
     verbose: true
+    on:
+      branches: dev
 #  - provider: script
 #    skip-cleanup: true
 #    script: "mvn -B -V deploy"
