@@ -9,31 +9,32 @@ source ./travis/setup_variables.sh
 cd $TD_BUILD_DIR
 if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
   cmake -DCMAKE_BUILD_TYPE=Release -DTD_ENABLE_JNI=ON -DCMAKE_INSTALL_PREFIX:PATH=${TD_BIN_DIR} ${TD_SRC_DIR}
+  # Prepare for split-sources
   cmake --build $TD_BUILD_DIR --target prepare_cross_compiling -- -j${TRAVIS_CPU_CORES}
 elif [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
   cmake -A x64 -DCMAKE_BUILD_TYPE=Release -DTD_ENABLE_JNI=ON -DCMAKE_INSTALL_PREFIX:PATH=${TD_BIN_DIR} -DCMAKE_TOOLCHAIN_FILE:FILEPATH=$VCPKG_DIR/scripts/buildsystems/vcpkg.cmake ${TD_SRC_DIR}
-  cmake --build $TD_BUILD_DIR --target prepare_cross_compiling -- -m
 fi
 
-# Split sources
-cd $TD_SRC_DIR
-php SplitSource.php
+  # Split sources
+if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+  cd $TD_SRC_DIR
+  php SplitSource.php
+fi
 
 # Build
 cd $TD_BUILD_DIR
 if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-  #cmake --build $TD_BUILD_DIR --target tdjson -- -j${TRAVIS_CPU_CORES}
-  #cmake --build $TD_BUILD_DIR --target tdjson_static -- -j${TRAVIS_CPU_CORES}
   cmake --build $TD_BUILD_DIR --target install --config Release -- -j${TRAVIS_CPU_CORES}
 elif [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
-  #cmake --build $TD_BUILD_DIR --target tdjson -- -m
-  #cmake --build $TD_BUILD_DIR --target tdjson_static -- -m
   cmake --build $TD_BUILD_DIR --target install --config Release -- -m
 fi
 
 # After build
-cd $TD_SRC_DIR
-php SplitSource.php --undo
+  # Undo split-sources
+if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+  cd $TD_SRC_DIR
+  php SplitSource.php --undo
+fi
 
 # ====== Build TdNatives
 cd $TDNATIVES_CPP_BUILD_DIR
