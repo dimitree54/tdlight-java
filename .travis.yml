@@ -30,7 +30,7 @@ addons:
     - maven
     - openjdk-11-jdk
     - python3
-    - php7.4-cli
+    - php7.2-cli
 cache:
   bundler: true
   cocoapods: true
