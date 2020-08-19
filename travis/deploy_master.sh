@@ -38,12 +38,21 @@ if [ "$TRAVIS_OS_NAME_STANDARD" = "windows" ]; then
 else
 	export TRAVIS_OS_NAME_SHORT=$TRAVIS_OS_NAME_STANDARD
 fi
+if [ "$TRAVIS_OS_NAME_STANDARD" = "windows" ]; then
+    export SRC_TDJNI_LIBNAME="libtdjni.dll"
+    export DEST_TDJNI_LIBNAME="tdjni.dll"
+else
+    export SRC_TDJNI_LIBNAME="libtdjni.so"
+    export DEST_TDJNI_LIBNAME="tdjni.so"
+fi
 
 echo "TRAVIS_OS_NAME: $TRAVIS_OS_NAME"
 echo "TRAVIS_OS_NAME_STANDARD: $TRAVIS_OS_NAME_STANDARD"
 echo "TRAVIS_OS_NAME_SHORT: $TRAVIS_OS_NAME_SHORT"
 echo "TRAVIS_CPU_ARCH: $TRAVIS_CPU_ARCH"
 echo "TRAVIS_CPU_ARCH_STANDARD: $TRAVIS_CPU_ARCH_STANDARD"
+echo "SRC_TDJNI_LIBNAME: $SRC_TDJNI_LIBNAME"
+echo "DEST_TDJNI_LIBNAME: $DEST_TDJNI_LIBNAME"
 # End setup variables
 
 # Setup ssh
@@ -62,22 +71,13 @@ git config pull.rebase false
 cd $TRAVIS_BUILD_DIR
 git clone --depth=1 "git@ssh.git.ignuranza.net:tdlight-team/tdlight-java-natives-$TRAVIS_OS_NAME_STANDARD-$TRAVIS_CPU_ARCH_STANDARD.git"
 cd "tdlight-java-natives-$TRAVIS_OS_NAME_STANDARD-$TRAVIS_CPU_ARCH_STANDARD"
-SRC_LIBNAME=""
-LIBNAME=""
-if [ "$TRAVIS_OS_NAME_STANDARD" = "windows" ]; then
-    export SRC_LIBNAME="libtdjni.dll"
-    export LIBNAME="tdjni.dll"
-else
-    export SRC_LIBNAME="libtdjni.so"
-    export LIBNAME="tdjni.so"
-fi
 mkdir -p "src/main/resources/libs/$TRAVIS_OS_NAME_SHORT/$TRAVIS_CPU_ARCH_STANDARD"
-mv "$TRAVIS_BUILD_DIR/out/$SRC_LIBNAME" "src/main/resources/libs/$TRAVIS_OS_NAME_SHORT/$TRAVIS_CPU_ARCH_STANDARD/$LIBNAME"
+mv "$TRAVIS_BUILD_DIR/out/$SRC_TDJNI_LIBNAME" "src/main/resources/libs/$TRAVIS_OS_NAME_SHORT/$TRAVIS_CPU_ARCH_STANDARD/$DEST_TDJNI_LIBNAME"
 
 # IF THE NATIVE LIBRARY IS CHANGED
-if [[ ! -z "$(git status --porcelain | grep \"src/main/resources/libs/$TRAVIS_OS_NAME_SHORT/$TRAVIS_CPU_ARCH_STANDARD/$LIBNAME\")" ]]; then
+if [[ ! -z "$(git status --porcelain | grep "src/main/resources/libs/$TRAVIS_OS_NAME_SHORT/$TRAVIS_CPU_ARCH_STANDARD/$DEST_TDJNI_LIBNAME")" ]]; then
     # Do the upgrade of the repository
-    git add "src/main/resources/libs/$TRAVIS_OS_NAME_SHORT/$TRAVIS_CPU_ARCH_STANDARD/$LIBNAME"
+    git add "src/main/resources/libs/$TRAVIS_OS_NAME_SHORT/$TRAVIS_CPU_ARCH_STANDARD/$DEST_TDJNI_LIBNAME"
     mvn build-helper:parse-version versions:set \
     -DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.minorVersion}.\${parsedVersion.nextIncrementalVersion} \
     versions:commit
@@ -123,7 +123,7 @@ if [ "$TRAVIS_OS_NAME_STANDARD" = "linux" ]; then
         cp $JAVA_SRC_DIR/it/tdlight/tdnatives/TdApi.java $TRAVIS_BUILD_DIR/tdlight-java/src/main/java/it/tdlight/tdnatives/TdApi.java
 
         # IF TdApi.java IS CHANGED
-		if [[ ! -z "$(git status --porcelain | grep \"$JAVA_SRC_DIR/it/tdlight/tdnatives/TdApi.java\")" ]]; then
+		if [[ ! -z "$(git status --porcelain | grep "$JAVA_SRC_DIR/it/tdlight/tdnatives/TdApi.java")" ]]; then
             # Upgrade TdApi.java in repository master
 			cd $TRAVIS_BUILD_DIR/tdlight-java
             git add src/main/java/it/tdlight/tdnatives/TdApi.java

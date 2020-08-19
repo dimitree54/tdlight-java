@@ -52,6 +52,4 @@ cmake -A x64 -DCMAKE_BUILD_TYPE=Release -DTD_BIN_DIR=${TD_BIN_DIR} -DTDNATIVES_B
 cmake --build $TDNATIVES_CPP_BUILD_DIR --target install --config Release
 
 # ====== Copy output
-ls -alch $TDNATIVES_BIN_DIR
-ls -alch $TDNATIVES_BIN_DIR/Release
 mv $TDNATIVES_BIN_DIR/tdjni.dll $TRAVIS_BUILD_DIR/out/libtdjni.dll
