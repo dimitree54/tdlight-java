@@ -90,9 +90,8 @@ if ! (git diff --exit-code "src/main/resources/libs/$TRAVIS_OS_NAME_SHORT/$TRAVI
 
     # Upgrade the dependency of tdlight-java
     cd $TRAVIS_BUILD_DIR
-    git clone git@ssh.git.ignuranza.net:tdlight-team/tdlight-java.git
+    git clone -b master --single-branch git@ssh.git.ignuranza.net:tdlight-team/tdlight-java.git
     cd tdlight-java
-    git checkout master
     mvn versions:use-latest-releases -Dincludes=it.tdlight:tdlight-natives-$TRAVIS_OS_NAME_STANDARD-$TRAVIS_CPU_ARCH_STANDARD
     rm pom.xml.versionsBackup
     git add pom.xml
@@ -112,10 +111,8 @@ if [ "$TRAVIS_OS_NAME_STANDARD" = "linux" ]; then
         unexpand --tabs=2 $JAVA_SRC_DIR/it/tdlight/tdnatives/new_TdApi.java > $JAVA_SRC_DIR/it/tdlight/tdnatives/TdApi.java
         rm $JAVA_SRC_DIR/it/tdlight/tdnatives/new_TdApi.java
         
-        cd $TRAVIS_BUILD_DIR
-        git clone git@ssh.git.ignuranza.net:tdlight-team/tdlight-java.git || true
-        cd tdlight-java
-        git checkout master
+        cd $TRAVIS_BUILD_DIR/tdlight-java
+        git pull
         cp $JAVA_SRC_DIR/it/tdlight/tdnatives/TdApi.java src/main/java/it/tdlight/tdnatives/TdApi.java
 
         # IF TdApi.java IS CHANGED
