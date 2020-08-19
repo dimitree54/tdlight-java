@@ -90,6 +90,7 @@ if ! (git diff --exit-code "src/main/resources/libs/$TRAVIS_OS_NAME_SHORT/$TRAVI
 
     # Upgrade the dependency of tdlight-java
     cd $TRAVIS_BUILD_DIR
+	rm -r tdlight-java || true
     git clone --depth=1 -b master --single-branch git@ssh.git.ignuranza.net:tdlight-team/tdlight-java.git || true
 	cd $TRAVIS_BUILD_DIR/tdlight-java
 	git checkout master
@@ -115,7 +116,8 @@ if [ "$TRAVIS_OS_NAME_STANDARD" = "linux" ]; then
         
    		# Upgrade the file of tdlight-java
 		cd $TRAVIS_BUILD_DIR
-    	git clone --depth=1 -b master --single-branch git@ssh.git.ignuranza.net:tdlight-team/tdlight-java.git || true
+		rm -r tdlight-java || true
+    	git clone --depth=1 -b master --single-branch git@ssh.git.ignuranza.net:tdlight-team/tdlight-java.git
         cd $TRAVIS_BUILD_DIR/tdlight-java
 		git checkout master
 		git pull
