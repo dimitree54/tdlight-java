@@ -91,7 +91,7 @@ if [[ ! -z "$(git status --porcelain | grep \"src/main/resources/libs/$TRAVIS_OS
 
     # Upgrade the dependency of tdlight-java
     cd $TRAVIS_BUILD_DIR
-	[ -d tdlight-java ] && rm -r tdlight-java
+	[ -d tdlight-java ] && sudo rm -rf --interactive=never tdlight-java
     git clone --depth=1 -b master --single-branch git@ssh.git.ignuranza.net:tdlight-team/tdlight-java.git
 	cd $TRAVIS_BUILD_DIR/tdlight-java
 	git checkout master
@@ -116,7 +116,7 @@ if [ "$TRAVIS_OS_NAME_STANDARD" = "linux" ]; then
         
    		# Upgrade the file of tdlight-java
 		cd $TRAVIS_BUILD_DIR
-		[ -d tdlight-java ] && rm -r tdlight-java
+		[ -d tdlight-java ] && sudo rm -rf --interactive=never tdlight-java
     	git clone --depth=1 -b master --single-branch git@ssh.git.ignuranza.net:tdlight-team/tdlight-java.git
         cd $TRAVIS_BUILD_DIR/tdlight-java
 		git checkout master
