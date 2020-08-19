@@ -75,7 +75,7 @@ mkdir -p "src/main/resources/libs/$TRAVIS_OS_NAME_SHORT/$TRAVIS_CPU_ARCH_STANDAR
 mv "$TRAVIS_BUILD_DIR/out/$SRC_LIBNAME" "src/main/resources/libs/$TRAVIS_OS_NAME_SHORT/$TRAVIS_CPU_ARCH_STANDARD/$LIBNAME"
 
 # IF THE NATIVE LIBRARY IS CHANGED
-if ! (git diff --exit-code "src/main/resources/libs/$TRAVIS_OS_NAME_SHORT/$TRAVIS_CPU_ARCH_STANDARD/$LIBNAME"); then
+if [[ ! -z "$(git status --porcelain | grep \"src/main/resources/libs/$TRAVIS_OS_NAME_SHORT/$TRAVIS_CPU_ARCH_STANDARD/$LIBNAME\")" ]]; then
     # Do the upgrade of the repository
     git add "src/main/resources/libs/$TRAVIS_OS_NAME_SHORT/$TRAVIS_CPU_ARCH_STANDARD/$LIBNAME"
     mvn build-helper:parse-version versions:set \
@@ -123,7 +123,7 @@ if [ "$TRAVIS_OS_NAME_STANDARD" = "linux" ]; then
         cp $JAVA_SRC_DIR/it/tdlight/tdnatives/TdApi.java $TRAVIS_BUILD_DIR/tdlight-java/src/main/java/it/tdlight/tdnatives/TdApi.java
 
         # IF TdApi.java IS CHANGED
-        if ! (git diff --exit-code "$JAVA_SRC_DIR/it/tdlight/tdnatives/TdApi.java"); then
+		if [[ ! -z "$(git status --porcelain | grep \"$JAVA_SRC_DIR/it/tdlight/tdnatives/TdApi.java\")" ]]; then
             # Upgrade TdApi.java in repository master
 			cd $TRAVIS_BUILD_DIR/tdlight-java
             git add src/main/java/it/tdlight/tdnatives/TdApi.java
