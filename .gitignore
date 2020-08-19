@@ -62,4 +62,3 @@ tdlib.iml
 /build-td
 /build-tdnatives
 __pycache__
-/src/tdnatives-java/it/tdlight/tdnatives/TdApi.java
