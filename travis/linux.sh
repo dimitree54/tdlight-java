@@ -17,7 +17,7 @@ echo "TD_BIN_DIR=${TD_BIN_DIR}"
 echo "JAVA_SRC_DIR=${JAVA_SRC_DIR}"
 
 # ====== Environment setup
-mkdir -p $TRAVIS_BUILD_DIR/out
+mkdir -p $TRAVIS_BUILD_DIR/out || true
 mkdir $TD_BUILD_DIR || true
 mkdir $TDNATIVES_CPP_BUILD_DIR || true
 

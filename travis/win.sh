@@ -25,8 +25,7 @@ rm $JAVA_SRC_DIR/it/tdlight/tdnatives/TdApi.java || true
 rm $JAVA_SRC_DIR/it/tdlight/tdnatives/new_TdApi.java || true
 
 # ====== Environment setup
-mkdir -p $TRAVIS_BUILD_DIR/out
-mkdir $TRAVIS_BUILD_DIR/out
+mkdir -p $TRAVIS_BUILD_DIR/out || true
 mkdir $TD_BUILD_DIR || true
 mkdir $TDNATIVES_CPP_BUILD_DIR || true
 choco install openjdk11 --version=11.0.8.10
@@ -37,19 +36,35 @@ choco install strawberryperl
 
 # Install OpenSSL and ZLib
 cd $TRAVIS_BUILD_DIR
-git clone https://github.com/Microsoft/vcpkg.git
-cd vcpkg
-cmd /c bootstrap-vcpkg.bat
-./vcpkg.exe install openssl:x64-windows zlib:x64-windows
+# openssl
+mkdir $TRAVIS_BUILD_DIR/openssl-root
+git clone https://github.com/openssl/openssl.git -b OpenSSL_1_1_1-stable
+cd openssl
+perl Configure enable-static-engine enable-capieng no-ssl2 -utf-8 VC-WIN64A --prefix=$TRAVIS_BUILD_DIR/openssl-root --openssldir=$TRAVIS_BUILD_DIR/openssl-root no-shared
+nmake
+nmake install
+cd ..
+
+# zlib
+cd $TRAVIS_BUILD_DIR
+mkdir $TRAVIS_BUILD_DIR/zlib-root
+git clone https://github.com/madler/zlib.git -b v1.2.11
+cd zlib
+cmake -DCMAKE_INSTALL_PREFIX:PATH=$TRAVIS_BUILD_DIR/zlib-root -DSKIP_BUILD_EXAMPLES=ON .
+cmake --build . --target install
+cd ..
+
+ls $TRAVIS_BUILD_DIR/openssl-root
+ls $TRAVIS_BUILD_DIR/zlib-root
 
 # ====== Build Td
 cd $TD_BUILD_DIR
-cmake -A x64 -DCMAKE_BUILD_TYPE=Release -DTD_ENABLE_JNI=ON -DCMAKE_INSTALL_PREFIX:PATH=${TD_BIN_DIR} -DCMAKE_TOOLCHAIN_FILE:FILEPATH=$TRAVIS_BUILD_DIR\\vcpkg\\scripts\\buildsystems\\vcpkg.cmake ${TD_SRC_DIR}
+cmake -A x64 -DCMAKE_BUILD_TYPE=Release -DTD_ENABLE_JNI=ON -DCMAKE_INSTALL_PREFIX:PATH=${TD_BIN_DIR} ${TD_SRC_DIR}
 cmake --build $TD_BUILD_DIR --target install
 
 # ====== Build TdNatives
 cd $TDNATIVES_CPP_BUILD_DIR
-cmake -A x64 -DCMAKE_BUILD_TYPE=Release -DTD_BIN_DIR=${TD_BIN_DIR} -DTDNATIVES_BIN_DIR=${TDNATIVES_BIN_DIR} -DTDNATIVES_DOCS_BIN_DIR=${TDNATIVES_DOCS_BIN_DIR} -DTd_DIR=${TD_BIN_DIR}/lib/cmake/Td -DJAVA_SRC_DIR=${JAVA_SRC_DIR} -DTDNATIVES_CPP_SRC_DIR:PATH=$TDNATIVES_CPP_SRC_DIR -DCMAKE_TOOLCHAIN_FILE:FILEPATH=$TRAVIS_BUILD_DIR\\vcpkg\\scripts\\buildsystems\\vcpkg.cmake $TDNATIVES_CPP_SRC_DIR
+cmake -A x64 -DCMAKE_BUILD_TYPE=Release -DTD_BIN_DIR=${TD_BIN_DIR} -DTDNATIVES_BIN_DIR=${TDNATIVES_BIN_DIR} -DTDNATIVES_DOCS_BIN_DIR=${TDNATIVES_DOCS_BIN_DIR} -DTd_DIR=${TD_BIN_DIR}/lib/cmake/Td -DJAVA_SRC_DIR=${JAVA_SRC_DIR} -DTDNATIVES_CPP_SRC_DIR:PATH=$TDNATIVES_CPP_SRC_DIR $TDNATIVES_CPP_SRC_DIR
 cmake --build $TDNATIVES_CPP_BUILD_DIR --target install
 
 # ====== Copy output
