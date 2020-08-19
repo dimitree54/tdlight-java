@@ -5,6 +5,10 @@ set -e
 source ./travis/setup_variables.sh
 
 # ====== Build Td
+# Split sources
+cd $TD_SRC_DIR
+php SplitSource.php
+# Build
 cd $TD_BUILD_DIR
 if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
   cmake -DCMAKE_BUILD_TYPE=Release -DTD_ENABLE_JNI=ON -DCMAKE_INSTALL_PREFIX:PATH=${TD_BIN_DIR} ${TD_SRC_DIR}

@@ -30,6 +30,7 @@ addons:
     - maven
     - openjdk-11-jdk
     - python3
+    - php7.4-cli
 cache:
   bundler: true
   cocoapods: true
@@ -55,5 +56,5 @@ deploy:
 #    script: "mvn -B -V deploy"
 
 install: ./travis/install_dependencies.sh
-script: travis_wait 30 ./travis/build.sh
+script: ./travis/build.sh
 after_success: ./travis/build_success.sh

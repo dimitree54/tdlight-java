@@ -25,6 +25,7 @@ elif [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
   choco install gperf
   choco install strawberryperl
   choco install nasm
+  choco install php --version=7.4.9 --package-parameters='"/ThreadSafe ""/InstallDir:C:\PHP"""'
 
   git clone --depth=1 -b windows-amd64-prebuilt-libraries --single-branch https://github.com/tdlight-team/tdlight-java windowsenv
   mv windowsenv/vcpkg $VCPKG_DIR
