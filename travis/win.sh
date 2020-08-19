@@ -38,7 +38,7 @@ choco install gperf
 choco install strawberryperl
 choco install nasm
 
-git clone -b windows-amd64-prebuilt-libraries --single-branch https://github.com/tdlight-team/tdlight-java windowsenv
+git clone --depth=1 -b windows-amd64-prebuilt-libraries --single-branch https://github.com/tdlight-team/tdlight-java windowsenv
 mv windowsenv/vcpkg $VCPKG_DIR
 
 # ====== Build Td

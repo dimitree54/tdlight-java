@@ -40,10 +40,12 @@ deploy:
     skip-cleanup: true
     github-token: $GITHUB_TOKEN
     keep-history: true
-    local-dir: out
+    local-dir: out/docs
     repo: tdlight-team/tdlib-docs
-    on:
-        branch: master
+    target_branch: master
+    email: andrea@cavallium.it
+    name: "Andrea Cavalli"
+    verbose: true
 #  - provider: script
 #    skip-cleanup: true
 #    script: "mvn -B -V deploy"

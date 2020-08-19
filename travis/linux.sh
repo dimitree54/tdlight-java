@@ -46,3 +46,4 @@ cmake -DCMAKE_BUILD_TYPE=Release -DTD_BIN_DIR=${TD_BIN_DIR} -DTDNATIVES_BIN_DIR=
 cmake --build $TDNATIVES_CPP_BUILD_DIR --target install -- -j2
 
 mv $TDNATIVES_BIN_DIR/libtdjni.so $TRAVIS_BUILD_DIR/out/libtdjni.so
+mv $TDNATIVES_DOCS_BIN_DIR $TRAVIS_BUILD_DIR/out/docs
