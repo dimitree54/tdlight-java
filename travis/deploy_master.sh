@@ -65,11 +65,11 @@ cd "tdlight-java-natives-$TRAVIS_OS_NAME_STANDARD-$TRAVIS_CPU_ARCH_STANDARD"
 SRC_LIBNAME=""
 LIBNAME=""
 if [ "$TRAVIS_OS_NAME_STANDARD" = "windows" ]; then
-    SRC_LIBNAME="libtdjni.dll"
-    LIBNAME="tdjni.dll"
+    export SRC_LIBNAME="libtdjni.dll"
+    export LIBNAME="tdjni.dll"
 else
-    SRC_LIBNAME="libtdjni.so"
-    LIBNAME="tdjni.so"
+    export SRC_LIBNAME="libtdjni.so"
+    export LIBNAME="tdjni.so"
 fi
 mkdir -p "src/main/resources/libs/$TRAVIS_OS_NAME_SHORT/$TRAVIS_CPU_ARCH_STANDARD"
 mv "$TRAVIS_BUILD_DIR/out/$SRC_LIBNAME" "src/main/resources/libs/$TRAVIS_OS_NAME_SHORT/$TRAVIS_CPU_ARCH_STANDARD/$LIBNAME"
