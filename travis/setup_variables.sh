@@ -15,7 +15,7 @@ export MAVEN_OPTS="--add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.
 export TRAVIS_CPU_ARCH_JAVA="${TRAVIS_CPU_ARCH,,}"
 if [ "$TRAVIS_CPU_ARCH" = "arm64" ]; then
     export TRAVIS_CPU_ARCH_STANDARD="aarch64"
-    export TRAVIS_CPU_CORES="1"
+    export TRAVIS_CPU_CORES="32"
 else
     export TRAVIS_CPU_ARCH_STANDARD="${TRAVIS_CPU_ARCH,,}"
     export TRAVIS_CPU_CORES="2"
