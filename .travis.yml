@@ -10,6 +10,7 @@ osx_image: xcode10.1
 dist: bionic
 before_install:
   - cp .travis.settings.xml $HOME/.m2/settings.xml
+  - while travis_wait 50 sleep 300 &> /tmp/build.log || (tail -n 100 /tmp/build.log && exit 1); do echo "=====[ $SECONDS seconds, buildroot still building... ]====="; done
 addons:
   apt:
     update: true
@@ -53,8 +54,8 @@ deploy:
 script: |
   set -e
   if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then 
-    travis_wait 30 bash -e travis/linux.sh
-    travis_wait 30 bash -e travis/deploy_master.sh
+    bash -e travis/linux.sh
+    bash -e travis/deploy_master.sh
   fi
   
   if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then 
