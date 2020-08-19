@@ -9,14 +9,13 @@ source ./travis/setup_variables.sh
 cd $TD_BUILD_DIR
 if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
   cmake -DCMAKE_BUILD_TYPE=Release -DTD_ENABLE_JNI=ON -DCMAKE_INSTALL_PREFIX:PATH=${TD_BIN_DIR} ${TD_SRC_DIR}
-  # Prepare for split-sources
-  cmake --build $TD_BUILD_DIR --target prepare_cross_compiling -- -j${TRAVIS_CPU_CORES}
 elif [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
   cmake -A x64 -DCMAKE_BUILD_TYPE=Release -DTD_ENABLE_JNI=ON -DCMAKE_INSTALL_PREFIX:PATH=${TD_BIN_DIR} -DCMAKE_TOOLCHAIN_FILE:FILEPATH=$VCPKG_DIR/scripts/buildsystems/vcpkg.cmake ${TD_SRC_DIR}
 fi
 
   # Split sources
 if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+  cmake --build $TD_BUILD_DIR --target prepare_cross_compiling -- -j${TRAVIS_CPU_CORES}
   cd $TD_SRC_DIR
   php SplitSource.php
 fi
@@ -29,8 +28,7 @@ elif [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
   cmake --build $TD_BUILD_DIR --target install --config Release -- -m
 fi
 
-# After build
-  # Undo split-sources
+# Undo split-sources
 if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
   cd $TD_SRC_DIR
   php SplitSource.php --undo
