@@ -17,7 +17,7 @@ echo "TD_BIN_DIR=${TD_BIN_DIR}"
 echo "JAVA_SRC_DIR=${JAVA_SRC_DIR}"
 
 # ====== OS Variables
-export PATH="$PATH:/c/Program Files/OpenJDK/openjdk-11.0.8_10/bin:/c/ProgramData/chocolatey/lib/maven/apache-maven-3.6.3/bin:/c/ProgramData/chocolatey/lib/base64/tools:/c/ProgramData/chocolatey/lib/nasm/tools"
+export PATH="$PATH:/c/Program Files/OpenJDK/openjdk-11.0.8_10/bin:/c/ProgramData/chocolatey/lib/maven/apache-maven-3.6.3/bin:/c/ProgramData/chocolatey/lib/base64/tools:/c/ProgramData/chocolatey/lib/nasm/tools:/c/ProgramData/chocolatey/lib/nasm:/c/Program Files/NASM:/c/Program Files/NASM/bin"
 export JAVA_HOME="/c/Program Files/OpenJDK/openjdk-11.0.8_10"
 
 # ====== Cleanup
