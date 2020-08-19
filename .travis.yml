@@ -10,7 +10,6 @@ osx_image: xcode10.1
 dist: bionic
 before_install:
   - cp .travis.settings.xml $HOME/.m2/settings.xml
-  - while travis_wait 50 sleep 300 &> /tmp/build.log || (tail -n 100 /tmp/build.log && exit 1); do echo "=====[ $SECONDS seconds, buildroot still building... ]====="; done
 addons:
   apt:
     update: true
