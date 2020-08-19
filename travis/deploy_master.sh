@@ -107,7 +107,7 @@ if [ "$TRAVIS_OS_NAME_STANDARD" = "linux" ]; then
         rm $JAVA_SRC_DIR/it/tdlight/tdnatives/new_TdApi.java
         
         cd $TRAVIS_BUILD_DIR
-        git clone git@ssh.git.ignuranza.net:tdlight-team/tdlight-java.git
+        git clone git@ssh.git.ignuranza.net:tdlight-team/tdlight-java.git || true
         cd tdlight-java
         git checkout master
         cp $JAVA_SRC_DIR/it/tdlight/tdnatives/TdApi.java src/main/java/it/tdlight/tdnatives/TdApi.java
