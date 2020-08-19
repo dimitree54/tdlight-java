@@ -52,7 +52,7 @@ deploy:
     name: "Andrea Cavalli"
     verbose: true
     on:
-      branches: dev
+      branch: dev
 #  - provider: script
 #    skip-cleanup: true
 #    script: "mvn -B -V deploy"
