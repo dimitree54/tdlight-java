@@ -13,6 +13,10 @@ elif [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
   cmake -A x64 -DCMAKE_BUILD_TYPE=Release -DTD_ENABLE_JNI=ON -DCMAKE_INSTALL_PREFIX:PATH=${TD_BIN_DIR} -DCMAKE_TOOLCHAIN_FILE:FILEPATH=$VCPKG_DIR/scripts/buildsystems/vcpkg.cmake ${TD_SRC_DIR}
 fi
 
+if [ "$TRAVIS_CPU_ARCH" = "arm64" ]; then
+  while true; do free -h ; sleep 2; done &
+fi
+
   # Split sources
 if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
   cmake --build $TD_BUILD_DIR --target prepare_cross_compiling -- -j${TRAVIS_CPU_CORES}
