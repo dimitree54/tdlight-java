@@ -28,6 +28,8 @@ rm $JAVA_SRC_DIR/it/tdlight/tdnatives/new_TdApi.java || true
 mkdir -p $TRAVIS_BUILD_DIR/out || true
 mkdir $TD_BUILD_DIR || true
 mkdir $TDNATIVES_CPP_BUILD_DIR || true
+choco install visualstudio2019buildtools
+tree "/c/"
 choco install openjdk11 --version=11.0.8.10
 choco install maven --version=3.6.3
 choco install base64
