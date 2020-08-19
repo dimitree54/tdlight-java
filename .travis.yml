@@ -10,10 +10,10 @@ osx_image: xcode10.1
 dist: bionic
 before_install:
   - cp .travis.settings.xml $HOME/.m2/settings.xml
-    - chmod +x travis/build.sh
-    - chmod +x travis/build_success.sh
-    - chmod +x travis/install_dependencies.sh
-    - chmod +x travis/setup_variables.sh
+  - chmod +x travis/build.sh
+  - chmod +x travis/build_success.sh
+  - chmod +x travis/install_dependencies.sh
+  - chmod +x travis/setup_variables.sh
 addons:
   apt:
     update: true
