@@ -2,7 +2,7 @@
 set -e
 
 # ====== Setup environment variables
-./travis/setup_variables.sh
+source ./travis/setup_variables.sh
 
 # ====== Copy build output
 if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then

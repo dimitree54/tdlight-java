@@ -2,7 +2,7 @@
 set -e
 
 # ====== Setup environment variables
-./travis/setup_variables.sh
+source ./travis/setup_variables.sh
 
 # ====== Environment cleanup
 [ -f $JAVA_SRC_DIR/it/tdlight/tdnatives/TdApi.java ] && rm $JAVA_SRC_DIR/it/tdlight/tdnatives/TdApi.java
