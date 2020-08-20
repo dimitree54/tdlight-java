@@ -60,7 +60,7 @@ if [[ ! -z "$(git status --porcelain | grep "src/main/resources/libs/$TRAVIS_OS_
     git submodule update --remote --init --recursive
     cd $TRAVIS_BUILD_DIR/tdlight-java
     git checkout td-master
-    mvn versions:use-latest-releases -Dincludes=it.tdlight:tdlight-natives-$TRAVIS_OS_NAME_STANDARD-$TRAVIS_CPU_ARCH_STANDARD
+    mvn versions:use-latest-releases -Dincludes=it.tdlight:tdlib-natives-$TRAVIS_OS_NAME_STANDARD-$TRAVIS_CPU_ARCH_STANDARD
     [ -f pom.xml.versionsBackup ] && rm pom.xml.versionsBackup
     git add pom.xml
     git commit -m "Upgrade $TRAVIS_OS_NAME_STANDARD-$TRAVIS_CPU_ARCH_STANDARD natives"
