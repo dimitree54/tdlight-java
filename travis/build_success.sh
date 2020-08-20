@@ -6,10 +6,10 @@ source ./travis/setup_variables.sh
 
 # ====== Copy build output
 if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-  mv $TDNATIVES_BIN_DIR/libtdjni.so $TRAVIS_BUILD_DIR/out/libtdjni.so
+  mv $TDNATIVES_BIN_DIR/$SRC_TDJNI_LIBNAME $TRAVIS_BUILD_DIR/out/$DEST_TDJNI_LIBNAME
   mv $TDNATIVES_DOCS_BIN_DIR $TRAVIS_BUILD_DIR/out/docs
 elif [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
-  mv $TDNATIVES_BIN_DIR/tdjni.dll $TRAVIS_BUILD_DIR/out/libtdjni.dll
+  mv $TDNATIVES_BIN_DIR/$SRC_TDJNI_LIBNAME $TRAVIS_BUILD_DIR/out/$DEST_TDJNI_LIBNAME
 fi
 
 # ====== Deploy phase
@@ -31,7 +31,9 @@ cd $TRAVIS_BUILD_DIR
 git clone --depth=1 "git@ssh.git.ignuranza.net:tdlight-team/tdlight-java-natives-$TRAVIS_OS_NAME_STANDARD-$TRAVIS_CPU_ARCH_STANDARD.git"
 cd "tdlight-java-natives-$TRAVIS_OS_NAME_STANDARD-$TRAVIS_CPU_ARCH_STANDARD"
 mkdir -p "src/main/resources/libs/$TRAVIS_OS_NAME_SHORT/$TRAVIS_CPU_ARCH_STANDARD"
-mv "$TRAVIS_BUILD_DIR/out/$SRC_TDJNI_LIBNAME" "src/main/resources/libs/$TRAVIS_OS_NAME_SHORT/$TRAVIS_CPU_ARCH_STANDARD/$DEST_TDJNI_LIBNAME"
+# Add the folder to git if not added
+git add "src/main/resources/libs/$TRAVIS_OS_NAME_SHORT/$TRAVIS_CPU_ARCH_STANDARD"
+mv "$TRAVIS_BUILD_DIR/out/$DEST_TDJNI_LIBNAME" "src/main/resources/libs/$TRAVIS_OS_NAME_SHORT/$TRAVIS_CPU_ARCH_STANDARD/$DEST_TDJNI_LIBNAME"
 
 # IF THE NATIVE LIBRARY IS CHANGED
 if [[ ! -z "$(git status --porcelain | grep "src/main/resources/libs/$TRAVIS_OS_NAME_SHORT/$TRAVIS_CPU_ARCH_STANDARD/$DEST_TDJNI_LIBNAME")" ]]; then

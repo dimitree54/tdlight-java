@@ -2,15 +2,15 @@
 set -e
 
 # ====== Variables
-export TD_SRC_DIR=${PWD}/dependencies/tdlight
-export TD_BIN_DIR=${PWD}/bin-td
-export TDNATIVES_BIN_DIR=${PWD}/bin-tdlib
-export TDNATIVES_CPP_SRC_DIR=${PWD}/src/tdlib-cpp
-export TDNATIVES_DOCS_BIN_DIR=${PWD}/bin-docs
-export TD_BUILD_DIR=${PWD}/build-td
-export TDNATIVES_CPP_BUILD_DIR=${PWD}/build-tdlib
-export JAVA_SRC_DIR=${PWD}/src/tdlib-java
-export TDLIB_SERIALIZER_DIR=${PWD}/dependencies/tdlib-serializer
+export TD_SRC_DIR=$TRAVIS_BUILD_DIR/dependencies/tdlight
+export TD_BIN_DIR=$TRAVIS_BUILD_DIR/bin-td
+export TDNATIVES_BIN_DIR=$TRAVIS_BUILD_DIR/bin-tdlib
+export TDNATIVES_CPP_SRC_DIR=$TRAVIS_BUILD_DIR/src/tdlib-cpp
+export TDNATIVES_DOCS_BIN_DIR=$TRAVIS_BUILD_DIR/bin-docs
+export TD_BUILD_DIR=$TRAVIS_BUILD_DIR/build-td
+export TDNATIVES_CPP_BUILD_DIR=$TRAVIS_BUILD_DIR/build-tdlib
+export JAVA_SRC_DIR=$TRAVIS_BUILD_DIR/src/tdlib-java
+export TDLIB_SERIALIZER_DIR=$TRAVIS_BUILD_DIR/dependencies/tdlib-serializer
 export MAVEN_OPTS="--add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/sun.nio.ch=ALL-UNNAMED --add-opens java.base/java.lang.reflect=ALL-UNNAMED --add-opens java.base/javax.crypto=ALL-UNNAMED --add-opens java.base/java.io=ALL-UNNAMED"
 export TRAVIS_CPU_ARCH_JAVA="${TRAVIS_CPU_ARCH,,}"
 if [ "$TRAVIS_CPU_ARCH" = "arm64" ]; then
@@ -27,7 +27,7 @@ else
 	export TRAVIS_OS_NAME_SHORT=$TRAVIS_OS_NAME_STANDARD
 fi
 if [ "$TRAVIS_OS_NAME_STANDARD" = "windows" ]; then
-    export SRC_TDJNI_LIBNAME="libtdjni.dll"
+    export SRC_TDJNI_LIBNAME="tdjni.dll"
     export DEST_TDJNI_LIBNAME="tdjni.dll"
 else
     export SRC_TDJNI_LIBNAME="libtdjni.so"
