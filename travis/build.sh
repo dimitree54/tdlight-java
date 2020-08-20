@@ -18,11 +18,11 @@ if [ "$TRAVIS_CPU_ARCH" = "arm64" ]; then
 fi
 
   # Split sources
-if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-  cmake --build $TD_BUILD_DIR --target prepare_cross_compiling -- -j${TRAVIS_CPU_CORES}
-  cd $TD_SRC_DIR
-  php SplitSource.php
-fi
+#if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+#  cmake --build $TD_BUILD_DIR --target prepare_cross_compiling -- -j${TRAVIS_CPU_CORES}
+#  cd $TD_SRC_DIR
+#  php SplitSource.php
+#fi
 
 # Build
 cd $TD_BUILD_DIR
@@ -33,10 +33,10 @@ elif [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
 fi
 
 # Undo split-sources
-if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-  cd $TD_SRC_DIR
-  php SplitSource.php --undo
-fi
+#if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+#  cd $TD_SRC_DIR
+#  php SplitSource.php --undo
+#fi
 
 # ====== Build TdNatives
 cd $TDNATIVES_CPP_BUILD_DIR
