@@ -34,12 +34,11 @@ mkdir -p "src/main/resources/libs/$TRAVIS_OS_NAME_SHORT/$TRAVIS_CPU_ARCH_STANDAR
 # Add the folder to git if not added
 mv "$TRAVIS_BUILD_DIR/out/$DEST_TDJNI_LIBNAME" "src/main/resources/libs/$TRAVIS_OS_NAME_SHORT/$TRAVIS_CPU_ARCH_STANDARD/$DEST_TDJNI_LIBNAME"
 
+# IF THE NATIVE LIBRARY IS CHANGED
 git add "src"
 git add "src/main/resources/libs/$TRAVIS_OS_NAME_SHORT/$TRAVIS_CPU_ARCH_STANDARD"
 git status --porcelain
 echo "File observed: $(git status --porcelain | grep "src/main/resources/libs/$TRAVIS_OS_NAME_SHORT/$TRAVIS_CPU_ARCH_STANDARD/$DEST_TDJNI_LIBNAME")"
-
-# IF THE NATIVE LIBRARY IS CHANGED
 if [[ ! -z "$(git status --porcelain | grep "src/main/resources/libs/$TRAVIS_OS_NAME_SHORT/$TRAVIS_CPU_ARCH_STANDARD/$DEST_TDJNI_LIBNAME")" ]]; then
     # Do the upgrade of the repository
     git add "src/main/resources/libs/$TRAVIS_OS_NAME_SHORT/$TRAVIS_CPU_ARCH_STANDARD/$DEST_TDJNI_LIBNAME"
@@ -56,10 +55,11 @@ if [[ ! -z "$(git status --porcelain | grep "src/main/resources/libs/$TRAVIS_OS_
 
     # Upgrade the dependency of tdlight-java
     cd $TRAVIS_BUILD_DIR
-	[ -d tdlight-java ] && sudo rm -rf --interactive=never tdlight-java
+    [ -d tdlight-java ] && sudo rm -rf --interactive=never tdlight-java
     git clone --depth=1 -b master --single-branch git@ssh.git.ignuranza.net:tdlight-team/tdlight-java.git
-	cd $TRAVIS_BUILD_DIR/tdlight-java
-	git checkout master
+    git submodule update --remote --init --recursive
+    cd $TRAVIS_BUILD_DIR/tdlight-java
+    git checkout master
     mvn versions:use-latest-releases -Dincludes=it.tdlight:tdlight-natives-$TRAVIS_OS_NAME_STANDARD-$TRAVIS_CPU_ARCH_STANDARD
     [ -f pom.xml.versionsBackup ] && rm pom.xml.versionsBackup
     git add pom.xml
@@ -74,23 +74,29 @@ if [ "$TRAVIS_OS_NAME_STANDARD" = "linux" ]; then
 
         # Patch TdApi.java
         echo "Patching TdApi.java"
+        cd $TDLIB_SERIALIZER_DIR
         python3 $TDLIB_SERIALIZER_DIR $JAVA_SRC_DIR/it/tdlight/tdlib/TdApi.java $JAVA_SRC_DIR/it/tdlight/tdlib/new_TdApi.java $TDLIB_SERIALIZER_DIR/headers.txt
         rm $JAVA_SRC_DIR/it/tdlight/tdlib/TdApi.java
         unexpand --tabs=2 $JAVA_SRC_DIR/it/tdlight/tdlib/new_TdApi.java > $JAVA_SRC_DIR/it/tdlight/tdlib/TdApi.java
         rm $JAVA_SRC_DIR/it/tdlight/tdlib/new_TdApi.java
 
-   		# Upgrade the file of tdlight-java
-		cd $TRAVIS_BUILD_DIR
-		[ -d tdlight-java ] && sudo rm -rf --interactive=never tdlight-java
-    	git clone --depth=1 -b master --single-branch git@ssh.git.ignuranza.net:tdlight-team/tdlight-java.git
+           # Upgrade the file of tdlight-java
+        cd $TRAVIS_BUILD_DIR
+        [ -d tdlight-java ] && sudo rm -rf --interactive=never tdlight-java
+        git clone --depth=1 -b master --single-branch git@ssh.git.ignuranza.net:tdlight-team/tdlight-java.git
+        git submodule update --remote --init --recursive
         cd $TRAVIS_BUILD_DIR/tdlight-java
-		git checkout master
+        git checkout master
         cp $JAVA_SRC_DIR/it/tdlight/tdlib/TdApi.java $TRAVIS_BUILD_DIR/tdlight-java/src/main/java/it/tdlight/tdlib/TdApi.java
 
         # IF TdApi.java IS CHANGED
-		if [[ ! -z "$(git status --porcelain | grep "$JAVA_SRC_DIR/it/tdlight/tdlib/TdApi.java")" ]]; then
+        cd $TRAVIS_BUILD_DIR/tdlight-java
+        git add "src/main/java/it/tdlight/tdlib/TdApi.java"
+        git status --porcelain
+        echo "File observed: $(git status --porcelain | grep "src/main/java/it/tdlight/tdlib/TdApi.java")"
+        if [[ ! -z "$(git status --porcelain | grep "src/main/java/it/tdlight/tdlib/TdApi.java")" ]]; then
             # Upgrade TdApi.java in repository master
-			cd $TRAVIS_BUILD_DIR/tdlight-java
+            cd $TRAVIS_BUILD_DIR/tdlight-java
             git add src/main/java/it/tdlight/tdlib/TdApi.java
             git commit -m "Upgraded TdApi.java"
             git push
