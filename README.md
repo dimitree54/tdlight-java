@@ -1,4 +1,4 @@
-TDLight Java [![Build Status](https://travis-ci.org/tdlight-team/tdlight-java.svg?branch=dev)](https://travis-ci.org/tdlight-team/tdlight-java)
+TDLight Java [![Build Status](https://travis-ci.org/tdlight-team/tdlight-java.svg?branch=td-dev)](https://travis-ci.org/tdlight-team/tdlight-java)
 ====================
 
 A barebone java wrapper for TDLib (and TDLight)
@@ -30,7 +30,7 @@ Maven configuration example to use this version of tdlight-java:
 <dependencies>
   <dependency>
     <groupId>it.tdlight</groupId>
-    <artifactId>tdlight-java</artifactId>
+    <artifactId>tdlib-java</artifactId>
     <version>REPLACE_WITH_LATEST_VERSION</version>
   </dependency>
 </dependencies>
@@ -41,7 +41,7 @@ repositories {
      maven { url "https://maven.pkg.github.com/tdlight-team/tdlight-java" }
 }
 dependencies {
-     implementation 'it.tdlight:tdlight-java:REPLACE_WITH_LATEST_VERSION'
+     implementation 'it.tdlight:tdlib-java:REPLACE_WITH_LATEST_VERSION'
 }
 ```
 
