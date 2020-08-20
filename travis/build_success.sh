@@ -2,46 +2,55 @@
 set -e
 
 # ====== Setup environment variables
+echo "Setup variabled."
 source ./travis/setup_variables.sh
+echo "Setup variables. OK"
 
 # ====== Copy build output
+  mv $TDNATIVES_BIN_DIR/$SRC_TDJNI_LIBNAME $TRAVIS_BUILD_DIR/out/$DEST_TDJNI_LIBNAME
 if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-  mv $TDNATIVES_BIN_DIR/$SRC_TDJNI_LIBNAME $TRAVIS_BUILD_DIR/out/$DEST_TDJNI_LIBNAME
   mv $TDNATIVES_DOCS_BIN_DIR $TRAVIS_BUILD_DIR/out/docs
-elif [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
-  mv $TDNATIVES_BIN_DIR/$SRC_TDJNI_LIBNAME $TRAVIS_BUILD_DIR/out/$DEST_TDJNI_LIBNAME
 fi
 
 # ====== Deploy phase
 
 # Setup ssh
+echo "Setup ssh."
 [ -d ~/.ssh ] || mkdir -p ~/.ssh
-echo "$GIT_IGN_TRAVIS_DEPLOY_PRIVATE_KEY" | base64 -d > ~/.ssh/id_rsa
+echo "$GIT_IGN_TRAVIS_DEPLOY_PRIVATE_KEY" | base64 -d > ~/.ssh/id_rsa || true
 chmod 600 ~/.ssh/id_rsa || true
-ssh-keyscan ssh.git.ignuranza.net >> $HOME/.ssh/known_hosts
-ssh-keyscan git.ignuranza.net >> $HOME/.ssh/known_hosts
+ssh-keyscan ssh.git.ignuranza.net >> $HOME/.ssh/known_hosts || true
+ssh-keyscan git.ignuranza.net >> $HOME/.ssh/known_hosts || true
+echo "Setup ssh. OK"
 
 # Setup user
+echo "Setup git user."
 git config --global user.email "andrea@cavallium.it"
 git config --global user.name "Andrea Cavalli"
 git config pull.rebase false
+echo "Setup git user. OK"
 
 # Prepare repository
+echo "Setup repository."
 cd $TRAVIS_BUILD_DIR
 git clone --depth=1 "git@ssh.git.ignuranza.net:tdlight-team/tdlight-java-natives-$TRAVIS_OS_NAME_STANDARD-$TRAVIS_CPU_ARCH_STANDARD.git"
 cd "tdlight-java-natives-$TRAVIS_OS_NAME_STANDARD-$TRAVIS_CPU_ARCH_STANDARD"
 [ -d "src/main/resources/libs/$TRAVIS_OS_NAME_SHORT/$TRAVIS_CPU_ARCH_STANDARD" ] || mkdir -p "src/main/resources/libs/$TRAVIS_OS_NAME_SHORT/$TRAVIS_CPU_ARCH_STANDARD"
 # Add the folder to git if not added
 mv "$TRAVIS_BUILD_DIR/out/$DEST_TDJNI_LIBNAME" "src/main/resources/libs/$TRAVIS_OS_NAME_SHORT/$TRAVIS_CPU_ARCH_STANDARD/$DEST_TDJNI_LIBNAME"
+echo "Setup repository. OK"
 
 # IF THE NATIVE LIBRARY IS CHANGED
-git add "src"
-git add "src/main/resources/libs/$TRAVIS_OS_NAME_SHORT/$TRAVIS_CPU_ARCH_STANDARD"
+echo "Checking natives changed."
+git add "src" || true
+git add "src/main/resources/libs/$TRAVIS_OS_NAME_SHORT/$TRAVIS_CPU_ARCH_STANDARD" || true
 git status --porcelain
 echo "File observed: $(git status --porcelain | grep "src/main/resources/libs/$TRAVIS_OS_NAME_SHORT/$TRAVIS_CPU_ARCH_STANDARD/$DEST_TDJNI_LIBNAME")"
+echo "Checking natives changed. OK"
 if [[ ! -z "$(git status --porcelain | grep "src/main/resources/libs/$TRAVIS_OS_NAME_SHORT/$TRAVIS_CPU_ARCH_STANDARD/$DEST_TDJNI_LIBNAME")" ]]; then
     # Do the upgrade of the repository
-    git add "src/main/resources/libs/$TRAVIS_OS_NAME_SHORT/$TRAVIS_CPU_ARCH_STANDARD/$DEST_TDJNI_LIBNAME"
+    echo "Upgrade repository."
+    git add "src/main/resources/libs/$TRAVIS_OS_NAME_SHORT/$TRAVIS_CPU_ARCH_STANDARD/$DEST_TDJNI_LIBNAME" || true
     mvn build-helper:parse-version versions:set \
     -DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.minorVersion}.\${parsedVersion.nextIncrementalVersion} \
     versions:commit
@@ -65,6 +74,7 @@ if [[ ! -z "$(git status --porcelain | grep "src/main/resources/libs/$TRAVIS_OS_
     git add pom.xml
     git commit -m "Upgrade $TRAVIS_OS_NAME_STANDARD-$TRAVIS_CPU_ARCH_STANDARD natives"
     git push
+    echo "Upgrade repository. OK"
 else
     echo "Binaries are already updated."
 fi
