@@ -15,7 +15,7 @@ fi
 # ====== Deploy phase
 
 # Setup ssh
-mkdir -p ~/.ssh
+[ -d ~/.ssh ] || mkdir -p ~/.ssh
 echo "$GIT_IGN_TRAVIS_DEPLOY_PRIVATE_KEY" | base64 -d > ~/.ssh/id_rsa
 chmod 600 ~/.ssh/id_rsa || true
 ssh-keyscan ssh.git.ignuranza.net >> $HOME/.ssh/known_hosts
@@ -30,7 +30,7 @@ git config pull.rebase false
 cd $TRAVIS_BUILD_DIR
 git clone --branch tdlib --depth=1 "git@ssh.git.ignuranza.net:tdlight-team/tdlight-java-natives-$TRAVIS_OS_NAME_STANDARD-$TRAVIS_CPU_ARCH_STANDARD.git"
 cd "tdlight-java-natives-$TRAVIS_OS_NAME_STANDARD-$TRAVIS_CPU_ARCH_STANDARD"
-mkdir -p "src/main/resources/libs/$TRAVIS_OS_NAME_SHORT/$TRAVIS_CPU_ARCH_STANDARD"
+[ -d "src/main/resources/libs/$TRAVIS_OS_NAME_SHORT/$TRAVIS_CPU_ARCH_STANDARD" ] || mkdir -p "src/main/resources/libs/$TRAVIS_OS_NAME_SHORT/$TRAVIS_CPU_ARCH_STANDARD"
 # Add the folder to git if not added
 mv "$TRAVIS_BUILD_DIR/out/$DEST_TDJNI_LIBNAME" "src/main/resources/libs/$TRAVIS_OS_NAME_SHORT/$TRAVIS_CPU_ARCH_STANDARD/$DEST_TDJNI_LIBNAME"
 
