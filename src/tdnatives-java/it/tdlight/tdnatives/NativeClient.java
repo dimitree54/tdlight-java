@@ -18,8 +18,8 @@ package it.tdlight.tdlight.natives;
 
 
 
-import it.tdlight.tdnatives.TdApi.Function;
-import it.tdlight.tdnatives.TdApi.Object;
+import it.tdlight.tdlib.TdApi.Function;
+import it.tdlight.tdlib.TdApi.Object;
 
 public class NativeClient {
     protected static native long createNativeClient();

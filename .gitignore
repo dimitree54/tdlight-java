@@ -58,8 +58,8 @@ tdlib.iml
 
 /bin-docs
 /bin-td
-/bin-tdnatives
+/bin-tdlib
 /build-td
-/build-tdnatives
+/build-tdlib
 __pycache__
-/src/tdnatives-java/it/tdlight/tdnatives/TdApi.java
+/src/tdlib-java/it/tdlight/tdlib/TdApi.java

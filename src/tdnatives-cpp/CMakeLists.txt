@@ -26,7 +26,7 @@ message(STATUS "Java Source Directory: ${JAVA_SRC_DIR}")
 # Generating TdApi.java
 find_program(PHP_EXECUTABLE php)
 
-set(TD_API_JAVA_PACKAGE "it/tdlight/tdnatives")
+set(TD_API_JAVA_PACKAGE "it/tdlight/tdlib")
 set(TD_API_JAVA_PATH ${JAVA_SRC_DIR})
 set(TD_API_TLO_PATH ${TD_BIN_DIR}/bin/td/generate/scheme/td_api.tlo)
 set(TD_API_TL_PATH ${TD_BIN_DIR}/bin/td/generate/scheme/td_api.tl)
@@ -51,7 +51,7 @@ add_custom_target(build_java
 )
 
 add_custom_target(generate_javadoc
-  COMMAND ${Java_JAVADOC_EXECUTABLE} -d ${TDNATIVES_DOCS_BIN_DIR} it.tdlight.tdnatives
+  COMMAND ${Java_JAVADOC_EXECUTABLE} -d ${TDNATIVES_DOCS_BIN_DIR} it.tdlight.tdlib
   WORKING_DIRECTORY ${TD_API_JAVA_PATH}
   COMMENT "Generating Javadoc documentation"
   DEPENDS td_generate_java_api

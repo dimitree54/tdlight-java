@@ -5,8 +5,8 @@ set -e
 source ./travis/setup_variables.sh
 
 # ====== Environment cleanup
-[ -f $JAVA_SRC_DIR/it/tdlight/tdnatives/TdApi.java ] && rm $JAVA_SRC_DIR/it/tdlight/tdnatives/TdApi.java
-[ -f $JAVA_SRC_DIR/it/tdlight/tdnatives/new_TdApi.java ] && rm $JAVA_SRC_DIR/it/tdlight/tdnatives/new_TdApi.java
+[ -f $JAVA_SRC_DIR/it/tdlight/tdlib/TdApi.java ] && rm $JAVA_SRC_DIR/it/tdlight/tdlib/TdApi.java
+[ -f $JAVA_SRC_DIR/it/tdlight/tdlib/new_TdApi.java ] && rm $JAVA_SRC_DIR/it/tdlight/tdlib/new_TdApi.java
 
 # ====== Environment setup
 [ -d $TRAVIS_BUILD_DIR/out ] || mkdir -p $TRAVIS_BUILD_DIR/out

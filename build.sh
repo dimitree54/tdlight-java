@@ -3,12 +3,12 @@
 # ====== Variables
 export TD_SRC_DIR=${PWD}/dependencies/tdlight
 export TD_BIN_DIR=${PWD}/bin-td
-export TDNATIVES_BIN_DIR=${PWD}/bin-tdnatives
-export TDNATIVES_CPP_SRC_DIR=${PWD}/src/tdnatives-cpp
+export TDNATIVES_BIN_DIR=${PWD}/bin-tdlib
+export TDNATIVES_CPP_SRC_DIR=${PWD}/src/tdlib-cpp
 export TDNATIVES_DOCS_BIN_DIR=${PWD}/bin-docs
 export TD_BUILD_DIR=${PWD}/build-td
-export TDNATIVES_CPP_BUILD_DIR=${PWD}/build-tdnatives
-export JAVA_SRC_DIR=${PWD}/src/tdnatives-java
+export TDNATIVES_CPP_BUILD_DIR=${PWD}/build-tdlib
+export JAVA_SRC_DIR=${PWD}/src/tdlib-java
 export TDLIB_SERIALIZER_DIR=${PWD}/dependencies/tdlib-serializer
 
 # ====== Print variables
@@ -34,8 +34,8 @@ cmake --build $TDNATIVES_CPP_BUILD_DIR --target install -- -j4
 
 # ====== Patch generated java code
 echo "Compilation done. Patching TdApi.java"
-python3 $TDLIB_SERIALIZER_DIR $JAVA_SRC_DIR/it/tdlight/tdnatives/TdApi.java $JAVA_SRC_DIR/it/tdlight/tdnatives/new_TdApi.java $TDLIB_SERIALIZER_DIR/headers.txt
-rm $JAVA_SRC_DIR/it/tdlight/tdnatives/TdApi.java
-unexpand --tabs=2 $JAVA_SRC_DIR/it/tdlight/tdnatives/new_TdApi.java > $JAVA_SRC_DIR/it/tdlight/tdnatives/TdApi.java
-rm $JAVA_SRC_DIR/it/tdlight/tdnatives/new_TdApi.java
+python3 $TDLIB_SERIALIZER_DIR $JAVA_SRC_DIR/it/tdlight/tdlib/TdApi.java $JAVA_SRC_DIR/it/tdlight/tdlib/new_TdApi.java $TDLIB_SERIALIZER_DIR/headers.txt
+rm $JAVA_SRC_DIR/it/tdlight/tdlib/TdApi.java
+unexpand --tabs=2 $JAVA_SRC_DIR/it/tdlight/tdlib/new_TdApi.java > $JAVA_SRC_DIR/it/tdlight/tdlib/TdApi.java
+rm $JAVA_SRC_DIR/it/tdlight/tdlib/new_TdApi.java
 

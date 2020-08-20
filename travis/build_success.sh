@@ -68,10 +68,10 @@ if [ "$TRAVIS_OS_NAME_STANDARD" = "linux" ]; then
 
         # Patch TdApi.java
         echo "Patching TdApi.java"
-        python3 $TDLIB_SERIALIZER_DIR $JAVA_SRC_DIR/it/tdlight/tdnatives/TdApi.java $JAVA_SRC_DIR/it/tdlight/tdnatives/new_TdApi.java $TDLIB_SERIALIZER_DIR/headers.txt
-        rm $JAVA_SRC_DIR/it/tdlight/tdnatives/TdApi.java
-        unexpand --tabs=2 $JAVA_SRC_DIR/it/tdlight/tdnatives/new_TdApi.java > $JAVA_SRC_DIR/it/tdlight/tdnatives/TdApi.java
-        rm $JAVA_SRC_DIR/it/tdlight/tdnatives/new_TdApi.java
+        python3 $TDLIB_SERIALIZER_DIR $JAVA_SRC_DIR/it/tdlight/tdlib/TdApi.java $JAVA_SRC_DIR/it/tdlight/tdlib/new_TdApi.java $TDLIB_SERIALIZER_DIR/headers.txt
+        rm $JAVA_SRC_DIR/it/tdlight/tdlib/TdApi.java
+        unexpand --tabs=2 $JAVA_SRC_DIR/it/tdlight/tdlib/new_TdApi.java > $JAVA_SRC_DIR/it/tdlight/tdlib/TdApi.java
+        rm $JAVA_SRC_DIR/it/tdlight/tdlib/new_TdApi.java
 
    		# Upgrade the file of tdlight-java
 		cd $TRAVIS_BUILD_DIR
@@ -79,13 +79,13 @@ if [ "$TRAVIS_OS_NAME_STANDARD" = "linux" ]; then
     	git clone --depth=1 -b master --single-branch git@ssh.git.ignuranza.net:tdlight-team/tdlight-java.git
         cd $TRAVIS_BUILD_DIR/tdlight-java
 		git checkout master
-        cp $JAVA_SRC_DIR/it/tdlight/tdnatives/TdApi.java $TRAVIS_BUILD_DIR/tdlight-java/src/main/java/it/tdlight/tdnatives/TdApi.java
+        cp $JAVA_SRC_DIR/it/tdlight/tdlib/TdApi.java $TRAVIS_BUILD_DIR/tdlight-java/src/main/java/it/tdlight/tdlib/TdApi.java
 
         # IF TdApi.java IS CHANGED
-		if [[ ! -z "$(git status --porcelain | grep "$JAVA_SRC_DIR/it/tdlight/tdnatives/TdApi.java")" ]]; then
+		if [[ ! -z "$(git status --porcelain | grep "$JAVA_SRC_DIR/it/tdlight/tdlib/TdApi.java")" ]]; then
             # Upgrade TdApi.java in repository master
 			cd $TRAVIS_BUILD_DIR/tdlight-java
-            git add src/main/java/it/tdlight/tdnatives/TdApi.java
+            git add src/main/java/it/tdlight/tdlib/TdApi.java
             git commit -m "Upgraded TdApi.java"
             git push
         else
