@@ -109,3 +109,4 @@ if [ "$TRAVIS_OS_NAME_STANDARD" = "linux" ]; then
 else
     echo "Don't update TdApi.java."
 fi
+echo "Finished."
