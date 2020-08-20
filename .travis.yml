@@ -54,7 +54,6 @@ deploy:
     on:
       branch: dev
       condition: $TRAVIS_OS_NAME = linux && $TRAVIS_CPU_ARCH = amd64
-      condition
 #  - provider: script
 #    skip-cleanup: true
 #    script: "mvn -B -V deploy"
