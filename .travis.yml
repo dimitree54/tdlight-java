@@ -52,7 +52,7 @@ deploy:
     name: "Andrea Cavalli"
     verbose: true
     on:
-      branch: dev
+      branch: td-dev
       condition: $TRAVIS_OS_NAME = linux && $TRAVIS_CPU_ARCH = amd64
 #  - provider: script
 #    skip-cleanup: true

@@ -1,7 +1,7 @@
  
-[submodule "dependencies/tdlight"]
-	path = dependencies/tdlight
-	url = https://git.ignuranza.net/tdlight-team/tdlight.git
+[submodule "dependencies/tdlib"]
+	path = dependencies/tdlib
+	url = https://github.com/tdlib/td
 [submodule "dependencies/tdlib-serializer"]
 	path = dependencies/tdlib-serializer
 	url = https://git.ignuranza.net/windoz/tdlib-serializer.git

@@ -28,7 +28,7 @@ git config pull.rebase false
 
 # Prepare repository
 cd $TRAVIS_BUILD_DIR
-git clone --depth=1 "git@ssh.git.ignuranza.net:tdlight-team/tdlight-java-natives-$TRAVIS_OS_NAME_STANDARD-$TRAVIS_CPU_ARCH_STANDARD.git"
+git clone --branch tdlib --depth=1 "git@ssh.git.ignuranza.net:tdlight-team/tdlight-java-natives-$TRAVIS_OS_NAME_STANDARD-$TRAVIS_CPU_ARCH_STANDARD.git"
 cd "tdlight-java-natives-$TRAVIS_OS_NAME_STANDARD-$TRAVIS_CPU_ARCH_STANDARD"
 mkdir -p "src/main/resources/libs/$TRAVIS_OS_NAME_SHORT/$TRAVIS_CPU_ARCH_STANDARD"
 # Add the folder to git if not added
@@ -48,18 +48,18 @@ if [[ ! -z "$(git status --porcelain | grep "src/main/resources/libs/$TRAVIS_OS_
     NEW_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
     git add pom.xml
     git commit -m "Updated native library"
-    git tag -a "v$NEW_VERSION" -m "Version $NEW_VERSION"
-    git push origin "v$NEW_VERSION"
+    git tag -a "v$NEW_VERSION-td" -m "Version $NEW_VERSION"
+    git push origin "v$NEW_VERSION-td"
     git push
     mvn -B -V deploy
 
     # Upgrade the dependency of tdlight-java
     cd $TRAVIS_BUILD_DIR
     [ -d tdlight-java ] && sudo rm -rf --interactive=never tdlight-java
-    git clone --depth=1 -b master --single-branch git@ssh.git.ignuranza.net:tdlight-team/tdlight-java.git
+    git clone --depth=1 -b td-master --single-branch git@ssh.git.ignuranza.net:tdlight-team/tdlight-java.git
     git submodule update --remote --init --recursive
     cd $TRAVIS_BUILD_DIR/tdlight-java
-    git checkout master
+    git checkout td-master
     mvn versions:use-latest-releases -Dincludes=it.tdlight:tdlight-natives-$TRAVIS_OS_NAME_STANDARD-$TRAVIS_CPU_ARCH_STANDARD
     [ -f pom.xml.versionsBackup ] && rm pom.xml.versionsBackup
     git add pom.xml
@@ -83,10 +83,10 @@ if [ "$TRAVIS_OS_NAME_STANDARD" = "linux" ]; then
            # Upgrade the file of tdlight-java
         cd $TRAVIS_BUILD_DIR
         [ -d tdlight-java ] && sudo rm -rf --interactive=never tdlight-java
-        git clone --depth=1 -b master --single-branch git@ssh.git.ignuranza.net:tdlight-team/tdlight-java.git
+        git clone --depth=1 -b td-master --single-branch git@ssh.git.ignuranza.net:tdlight-team/tdlight-java.git
         git submodule update --remote --init --recursive
         cd $TRAVIS_BUILD_DIR/tdlight-java
-        git checkout master
+        git checkout td-master
         cp $JAVA_SRC_DIR/it/tdlight/tdlib/TdApi.java $TRAVIS_BUILD_DIR/tdlight-java/src/main/java/it/tdlight/tdlib/TdApi.java
 
         # IF TdApi.java IS CHANGED

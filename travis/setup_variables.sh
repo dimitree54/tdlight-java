@@ -2,7 +2,7 @@
 set -e
 
 # ====== Variables
-export TD_SRC_DIR=$TRAVIS_BUILD_DIR/dependencies/tdlight
+export TD_SRC_DIR=$TRAVIS_BUILD_DIR/dependencies/tdlib
 export TD_BIN_DIR=$TRAVIS_BUILD_DIR/bin-td
 export TDNATIVES_BIN_DIR=$TRAVIS_BUILD_DIR/bin-tdlib
 export TDNATIVES_CPP_SRC_DIR=$TRAVIS_BUILD_DIR/src/tdlib-cpp
