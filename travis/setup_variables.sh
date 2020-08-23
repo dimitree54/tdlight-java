@@ -29,6 +29,9 @@ fi
 if [ "$TRAVIS_OS_NAME_STANDARD" = "windows" ]; then
     export SRC_TDJNI_LIBNAME="tdjni.dll"
     export DEST_TDJNI_LIBNAME="tdjni.dll"
+elif [ "$TRAVIS_OS_NAME_STANDARD" = "osx" ]; then
+    export SRC_TDJNI_LIBNAME="libtdjni.dylib"
+    export DEST_TDJNI_LIBNAME="tdjni.dylib"
 else
     export SRC_TDJNI_LIBNAME="libtdjni.so"
     export DEST_TDJNI_LIBNAME="tdjni.so"
@@ -39,6 +42,10 @@ if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
   export PATH="$PATH:/c/tools/php74:/c/PHP:/c/Program Files (x86)/Microsoft Visual Studio/2019/BuildTools/VC/Tools/MSVC/14.27.29110/bin/Hostx64/x64:/c/Program Files/OpenJDK/openjdk-11.0.8_10/bin:/c/Program Files/CMake/bin:/c/ProgramData/chocolatey/bin:/c/Program Files/apache-maven-3.6.3/bin:/c/ProgramData/chocolatey/lib/maven/apache-maven-3.6.3/bin:/c/ProgramData/chocolatey/lib/base64/tools:/c/Program Files/NASM"
   export JAVA_HOME="/c/Program Files/OpenJDK/openjdk-11.0.8_10"
   export VCPKG_DIR=$TRAVIS_BUILD_DIR/vcpkg
+elif [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+  export PATH="$PATH:$(/usr/libexec/java_home -v 11)"
+  export JAVA_HOME="$(/usr/libexec/java_home -v 11)"
+  export JAVA_INCLUDE_PATH="$(/usr/libexec/java_home -v 11)/include"
 elif [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
   export PATH="$PATH:/usr/lib/jvm/java-11-openjdk-$TRAVIS_CPU_ARCH_JAVA/bin"
   export JAVA_HOME="/usr/lib/jvm/java-11-openjdk-$TRAVIS_CPU_ARCH_JAVA"
