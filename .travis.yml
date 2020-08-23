@@ -3,6 +3,7 @@ language: shell
 os:
   - linux
   - windows
+  - osx
 arch:
   - amd64
   - arm64
