@@ -42,9 +42,9 @@ if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
   export JAVA_HOME="/c/Program Files/OpenJDK/openjdk-11.0.8_10"
   export VCPKG_DIR=$TRAVIS_BUILD_DIR/vcpkg
 elif [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-  export PATH="$PATH:$(/usr/libexec/java_home -v 11)"
-  export JAVA_HOME="$(/usr/libexec/java_home -v 11)"
-  export JAVA_INCLUDE_PATH="$(/usr/libexec/java_home -v 11)/include"
+  export PATH="$PATH:$(/usr/libexec/java_home -v 14)"
+  export JAVA_HOME="$(/usr/libexec/java_home -v 14)"
+  export JAVA_INCLUDE_PATH="$(/usr/libexec/java_home -v 14)/include"
 elif [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
   export TRAVIS_CPU_ARCH_JAVA="${TRAVIS_CPU_ARCH,,}"
   export PATH="$PATH:/usr/lib/jvm/java-11-openjdk-$TRAVIS_CPU_ARCH_JAVA/bin"
