@@ -17,7 +17,7 @@ fi
 # Setup ssh
 echo "Setup ssh."
 [ -d ~/.ssh ] || mkdir -p ~/.ssh
-echo "$GIT_IGN_TRAVIS_DEPLOY_PRIVATE_KEY" | base64 -d > ~/.ssh/id_rsa || true
+echo "$GIT_IGN_TRAVIS_DEPLOY_PRIVATE_KEY" | base64 --decode > ~/.ssh/id_rsa || true
 chmod 600 ~/.ssh/id_rsa || true
 ssh-keyscan ssh.git.ignuranza.net >> $HOME/.ssh/known_hosts || true
 ssh-keyscan git.ignuranza.net >> $HOME/.ssh/known_hosts || true
