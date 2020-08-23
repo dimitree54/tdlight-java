@@ -60,7 +60,8 @@ if [[ ! -z "$(git status --porcelain | grep "src/main/resources/libs/$TRAVIS_OS_
     git tag -a "v$NEW_VERSION-td" -m "Version $NEW_VERSION"
     git push origin "v$NEW_VERSION-td"
     git push
-    mvn -B -V deploy
+    mvn -B -V deploy -P publish-to-mchv
+    mvn -B -V deploy -P publish-to-github
 
     # Upgrade the dependency of tdlight-java
     cd $TRAVIS_BUILD_DIR
