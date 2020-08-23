@@ -16,10 +16,12 @@ if [ "$TRAVIS_CPU_ARCH" = "arm64" ]; then
     export TRAVIS_CPU_ARCH_STANDARD="aarch64"
     export TRAVIS_CPU_CORES="2"
 else
-    export TRAVIS_CPU_ARCH_STANDARD="${TRAVIS_CPU_ARCH,,}"
+    TRAVIS_CPU_ARCH_STANDARD="$(tr '[:upper:]' '[:lower:]'<<<"${TRAVIS_CPU_ARCH}")"
+    export TRAVIS_CPU_ARCH_STANDARD;
     export TRAVIS_CPU_CORES="2"
 fi
-export TRAVIS_OS_NAME_STANDARD="${TRAVIS_OS_NAME,,}"
+TRAVIS_OS_NAME_STANDARD="$(tr '[:upper:]' '[:lower:]'<<<"${TRAVIS_OS_NAME}")"
+export TRAVIS_OS_NAME_STANDARD
 if [ "$TRAVIS_OS_NAME_STANDARD" = "windows" ]; then
 	export TRAVIS_OS_NAME_SHORT="win"
 else
@@ -42,11 +44,15 @@ if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
   export JAVA_HOME="/c/Program Files/OpenJDK/openjdk-11.0.8_10"
   export VCPKG_DIR=$TRAVIS_BUILD_DIR/vcpkg
 elif [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-  export PATH="$PATH:$(/usr/libexec/java_home -v 14)"
-  export JAVA_HOME="$(/usr/libexec/java_home -v 14)"
-  export JAVA_INCLUDE_PATH="$(/usr/libexec/java_home -v 14)/include"
+  PATH="$PATH:$(/usr/libexec/java_home -v 14)"
+  export PATH
+  JAVA_HOME="$(/usr/libexec/java_home -v 14)"
+  export JAVA_HOME
+  JAVA_INCLUDE_PATH="$(/usr/libexec/java_home -v 14)/include"
+  export JAVA_INCLUDE_PATH
 elif [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-  export TRAVIS_CPU_ARCH_JAVA="${TRAVIS_CPU_ARCH,,}"
+  TRAVIS_CPU_ARCH_JAVA="$(tr '[:upper:]' '[:lower:]'<<<"${TRAVIS_CPU_ARCH}")"
+  export TRAVIS_CPU_ARCH_JAVA
   export PATH="$PATH:/usr/lib/jvm/java-11-openjdk-$TRAVIS_CPU_ARCH_JAVA/bin"
   export JAVA_HOME="/usr/lib/jvm/java-11-openjdk-$TRAVIS_CPU_ARCH_JAVA"
   export JAVA_INCLUDE_PATH="/usr/lib/jvm/java-11-openjdk-$TRAVIS_CPU_ARCH_JAVA/include"
