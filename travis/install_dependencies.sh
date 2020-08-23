@@ -15,6 +15,8 @@ source ./travis/setup_variables.sh
 
 if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
   echo "Linux"
+elif [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+  echo "OSX"
 elif [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
   echo "Windows"
   choco install ccache
