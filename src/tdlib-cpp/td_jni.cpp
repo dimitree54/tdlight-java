@@ -68,6 +68,35 @@ static jint Client_nativeClientReceive(JNIEnv *env, jclass clazz, jlong client_i
   return result_size;
 }
 
+static jint Client_nativeClientReceiveAdvanced(JNIEnv *env, jclass clazz, jlong client_id, jlongArray ids, jobjectArray events,
+                                       jdouble timeout, jboolean include_responses, jboolean include_updates) {
+  auto client = get_client(client_id);
+  jsize events_size = env->GetArrayLength(ids);  // ids and events size must be of equal size
+  if (events_size == 0) {
+    return 0;
+  }
+  jsize result_size = 0;
+
+  auto response = client->receive(timeout, include_responses, include_updates);
+  while (response.object) {
+    jlong result_id = static_cast<jlong>(response.id);
+    env->SetLongArrayRegion(ids, result_size, 1, &result_id);
+
+    jobject object;
+    response.object->store(env, object);
+    env->SetObjectArrayElement(events, result_size, object);
+    env->DeleteLocalRef(object);
+
+    result_size++;
+    if (result_size == events_size) {
+      break;
+    }
+
+    response = client->receive(0, include_responses, include_updates);
+  }
+  return result_size;
+}
+
 static jobject Client_nativeClientExecute(JNIEnv *env, jclass clazz, jobject function) {
   jobject result;
   td::Client::execute({0, fetch_function(env, function)}).object->store(env, result);
@@ -137,6 +166,7 @@ static jint register_native(JavaVM *vm) {
   register_method(client_class, "createNativeClient", "()J", Client_createNativeClient);
   register_method(client_class, "nativeClientSend", "(JJ" TD_FUNCTION ")V", Client_nativeClientSend);
   register_method(client_class, "nativeClientReceive", "(J[J[" TD_OBJECT "D)I", Client_nativeClientReceive);
+  register_method(client_class, "nativeClientReceive", "(J[J[" TD_OBJECT "DZZ)I", Client_nativeClientReceiveAdvanced);
   register_method(client_class, "nativeClientExecute", "(" TD_FUNCTION ")" TD_OBJECT, Client_nativeClientExecute);
   register_method(client_class, "destroyNativeClient", "(J)V", Client_destroyNativeClient);
 
