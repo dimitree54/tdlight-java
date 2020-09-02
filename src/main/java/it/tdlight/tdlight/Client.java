@@ -1,8 +1,7 @@
 package it.tdlight.tdlight;
 
-import it.tdlight.tdlib.TdApi.Object;
 import it.tdlight.tdlib.NativeClient;
-import java.util.ArrayList;
+import it.tdlight.tdlib.TdApi.Object;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.locks.ReentrantLock;
@@ -39,27 +38,36 @@ public class Client extends NativeClient implements TelegramClient {
 		nativeClientSend(this.clientId, request.getId(), request.getFunction());
 	}
 
-	private long[] eventIds;
-	private Object[] events;
+	private final long[][] eventIds = new long[2][];
+	private final Object[][] events = new Object[2][];
 
 	@Override
-	public List<Response> receive(double timeout, int eventSize, boolean receiveResponses, boolean receiveUpdates) {
+	public List<Response> receive(double timeout, int eventsSize, boolean receiveResponses, boolean receiveUpdates) {
+		return Arrays.asList(this.receive(timeout, eventsSize, receiveResponses, receiveUpdates, false));
+	}
+
+	private Response[] receive(double timeout, int eventsSize, boolean receiveResponses, boolean receiveUpdates, boolean singleResponse) {
 		if (this.executionLock.isWriteLocked()) {
 			throw new IllegalStateException("ClientActor is destroyed");
 		}
 		if (!(receiveResponses && receiveUpdates)) {
 			throw new IllegalArgumentException("The variables receiveResponses and receiveUpdates must be both true, because you are using the original TDLib!");
 		}
+		int group = (singleResponse ? 0b1 : 0b0);
 
-		ArrayList<Response> responseList = new ArrayList<>();
-		if (eventIds == null) {
-			eventIds = new long[eventSize];
-			events = new Object[eventSize];
-		} else if (eventIds.length != eventSize) {
-			throw new IllegalArgumentException("EventSize can't change! Previous value = " + eventIds.length + " New value = " + eventSize);
+		if (eventIds[group] == null) {
+			eventIds[group] = new long[eventsSize];
 		} else {
-			Arrays.fill(eventIds, 0);
-			Arrays.fill(events, null);
+			Arrays.fill(eventIds[group], 0);
+		}
+		if (events[group] == null) {
+			events[group] = new Object[eventsSize];
+		} else {
+			Arrays.fill(events[group], null);
+		}
+		if (eventIds[group].length != eventsSize || events[group].length != eventsSize) {
+			throw new IllegalArgumentException("EventSize can't change over time!"
+					+ " Previous: " + eventIds[group].length + " Current: " + eventsSize);
 		}
 
 		if (this.receiveLock.isLocked()) {
@@ -69,16 +77,18 @@ public class Client extends NativeClient implements TelegramClient {
 		int resultSize;
 		this.receiveLock.lock();
 		try {
-			resultSize = nativeClientReceive(this.clientId, eventIds, events, timeout);
+			resultSize = nativeClientReceive(this.clientId, eventIds[group], events[group], timeout);
 		} finally {
 			this.receiveLock.unlock();
 		}
 
+		Response[] responses = new Response[resultSize];
+
 		for (int i = 0; i < resultSize; i++) {
-			responseList.add(new Response(eventIds[i], events[i]));
+			responses[i] = new Response(eventIds[group][i], events[group][i]);
 		}
 
-		return responseList;
+		return responses;
 	}
 
 	@Override
@@ -90,13 +100,13 @@ public class Client extends NativeClient implements TelegramClient {
 			throw new IllegalArgumentException("The variables receiveResponses and receiveUpdates must be both true, because you are using the original TDLib!");
 		}
 
-		List<Response> responseList = receive(timeout, 1);
+		Response[] responses = receive(timeout, 1, receiveResponses, receiveUpdates, true);
 
-		if (responseList.size() < 1) {
-			return null;
+		if (responses.length != 0) {
+			return responses[0];
 		}
 
-		return responseList.get(0);
+		return null;
 	}
 
 	@Override
