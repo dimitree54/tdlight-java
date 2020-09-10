@@ -1,5 +1,6 @@
 package it.tdlight.tdlight;
 
+import com.googlecode.concurentlocks.ReentrantReadWriteUpdateLock;
 import it.tdlight.tdlib.NativeClient;
 import it.tdlight.tdlib.TdApi;
 import it.tdlight.tdlib.TdApi.AuthorizationStateClosed;
@@ -13,7 +14,6 @@ import java.time.Duration;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
  * Interface for interaction with TDLib.
@@ -21,7 +21,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 public class Client extends NativeClient implements TelegramClient {
 
 	private ClientState state = ClientState.of(false, 0, false, false, false);
-	private final ReentrantReadWriteLock stateLock = new ReentrantReadWriteLock();
+	private final ReentrantReadWriteUpdateLock stateLock = new ReentrantReadWriteUpdateLock();
 
 	/**
 	 * Creates a new TDLib client.
@@ -54,7 +54,7 @@ public class Client extends NativeClient implements TelegramClient {
 	@Override
 	public List<Response> receive(double timeout, int eventsSize, boolean receiveResponses, boolean receiveUpdates) {
 		long clientId;
-		stateLock.readLock().lock();
+		stateLock.updateLock().lock();
 		try {
 			if (!state.isInitialized()) {
 				sleep(timeout);
@@ -69,7 +69,7 @@ public class Client extends NativeClient implements TelegramClient {
 			clientId = state.getClientId();
 			return Arrays.asList(this.internalReceive(clientId, timeout, eventsSize, receiveResponses, receiveUpdates));
 		} finally {
-			stateLock.readLock().unlock();
+			stateLock.updateLock().unlock();
 		}
 	}
 
@@ -87,7 +87,7 @@ public class Client extends NativeClient implements TelegramClient {
 	@Override
 	public Response receive(double timeout, boolean receiveResponses, boolean receiveUpdates) {
 		long clientId;
-		stateLock.readLock().lock();
+		stateLock.updateLock().lock();
 		try {
 			if (!state.isInitialized()) {
 				sleep(timeout);
@@ -109,7 +109,7 @@ public class Client extends NativeClient implements TelegramClient {
 
 			return null;
 		} finally {
-			stateLock.readLock().unlock();
+			stateLock.updateLock().unlock();
 		}
 	}
 

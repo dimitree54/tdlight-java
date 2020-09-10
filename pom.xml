@@ -63,6 +63,11 @@
             <artifactId>tdlib-natives-osx-amd64</artifactId>
             <version>1.1.5</version>
         </dependency>
+        <dependency>
+            <groupId>com.googlecode.concurrent-locks</groupId>
+            <artifactId>concurrent-locks</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
