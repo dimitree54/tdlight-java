@@ -1,5 +1,4 @@
-cmake_minimum_required(VERSION 3.0.2 FATAL_ERROR)
-cmake_policy(SET CMP0074 NEW)
+cmake_minimum_required(VERSION 3.12.0 FATAL_ERROR)
 
 project(JTDLib VERSION 1.0 LANGUAGES CXX)
 set(CMAKE_BUILD_TYPE Release)
@@ -9,6 +8,8 @@ if (POLICY CMP0054)
   # do not expand quoted arguments
   cmake_policy(SET CMP0054 NEW)
 endif()
+
+cmake_policy(SET CMP0074 NEW)
 
 find_package(Td REQUIRED)
 
