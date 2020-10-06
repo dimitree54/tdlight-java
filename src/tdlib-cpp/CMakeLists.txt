@@ -28,12 +28,14 @@ message(STATUS "Java Source Directory: ${JAVA_SRC_DIR}")
 # Generating TdApi.java
 find_program(PHP_EXECUTABLE php)
 
+message(STATUS "PHP Executable: ${PHP_EXECUTABLE}")
+
 set(TD_API_JAVA_PACKAGE "it/tdlight/tdlib")
 set(TD_API_JAVA_PATH ${JAVA_SRC_DIR})
-set(TD_API_TLO_PATH ${TD_BIN_DIR}/bin/td/generate/scheme/td_api.tlo)
-set(TD_API_TL_PATH ${TD_BIN_DIR}/bin/td/generate/scheme/td_api.tl)
-set(JAVADOC_TL_DOCUMENTATION_GENERATOR_PATH ${TD_BIN_DIR}/bin/td/generate/JavadocTlDocumentationGenerator.php)
-set(GENERATE_JAVA_API_CMD ${TD_BIN_DIR}/bin/td_generate_java_api TdApi ${TD_API_TLO_PATH} ${TD_API_JAVA_PATH} ${TD_API_JAVA_PACKAGE})
+set(TD_API_TLO_PATH ${TD_SRC_DIR}/td/generate/scheme/td_api.tlo)
+set(TD_API_TL_PATH ${TD_SRC_DIR}/td/generate/scheme/td_api.tl)
+set(JAVADOC_TL_DOCUMENTATION_GENERATOR_PATH ${TD_SRC_DIR}/td/generate/JavadocTlDocumentationGenerator.php)
+set(GENERATE_JAVA_API_CMD ${TD_GENERATED_BINARIES_DIR}/td_generate_java_api TdApi ${TD_API_TLO_PATH} ${TD_API_JAVA_PATH} ${TD_API_JAVA_PACKAGE})
 if (PHP_EXECUTABLE)
   set(GENERATE_JAVA_API_CMD ${GENERATE_JAVA_API_CMD} && ${PHP_EXECUTABLE} ${JAVADOC_TL_DOCUMENTATION_GENERATOR_PATH} ${TD_API_TL_PATH} ${TD_API_JAVA_PATH}/${TD_API_JAVA_PACKAGE}/TdApi.java)
 endif()
@@ -41,7 +43,7 @@ endif()
 add_custom_target(td_generate_java_api
   COMMAND ${GENERATE_JAVA_API_CMD}
   COMMENT "Generating Java TDLib API source files"
-  DEPENDS ${TD_BIN_DIR}/bin/td_generate_java_api ${TD_API_TLO_PATH} ${TD_API_TL_PATH} ${JAVADOC_TL_DOCUMENTATION_GENERATOR_PATH}
+  DEPENDS ${TD_GENERATED_BINARIES_DIR}/td_generate_java_api ${TD_API_TLO_PATH} ${TD_API_TL_PATH} ${JAVADOC_TL_DOCUMENTATION_GENERATOR_PATH}
 )
 
 get_filename_component(JAVA_OUTPUT_DIRECTORY ${TDNATIVES_BIN_DIR}/java-classes REALPATH BASE_DIR "${CMAKE_CURRENT_BINARY_DIR}")
