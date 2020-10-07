@@ -29,6 +29,7 @@ pipeline {
 				}
 			}
 			steps {
+				sh "mvn -s $MVN_SET dependency:purge-local-repository -DactTransitively=false -DreResolve=false --fail-at-end"
 				sh "mvn -s $MVN_SET -B deploy"
 			}
 		}
@@ -45,6 +46,7 @@ pipeline {
 				expression { params.RELEASE }
 			}
 			steps {
+				sh "mvn -s $MVN_SET dependency:purge-local-repository -DactTransitively=false -DreResolve=false --fail-at-end"
 				sh "git config user.email \"jenkins@mchv.eu\""
 				sh "git config user.name \"Jenkins\""
 				sh "mvn -s $MVN_SET -DpushChanges=false -DlocalCheckout=true -DpreparationGoals=initialize release:prepare release:perform -B"
