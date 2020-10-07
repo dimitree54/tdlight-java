@@ -74,7 +74,9 @@ pipeline {
 				sh "mvn -s $MVN_SET dependency:purge-local-repository -DactTransitively=false -DreResolve=false --fail-at-end"
 				sh "git config user.email \"jenkins@mchv.eu\""
 				sh "git config user.name \"Jenkins\""
-				sh "git add --all; git commit -m \"Add generated files\""
+				sh "cd ${workspace}"
+				sh "git add --all || true"
+				sh "git commit -m \"Add generated files\" || true"
 				sh "mvn -s $MVN_SET -DpushChanges=false -DlocalCheckout=true -DpreparationGoals=initialize release:prepare release:perform -B"
 			}
 		}
