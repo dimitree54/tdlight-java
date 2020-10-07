@@ -11,39 +11,27 @@
 
     <repositories>
         <repository>
-            <id>mchv</id>
-            <name>MCHV Apache Maven Packages</name>
-            <url>https://mvn.mchv.eu/repository/mchv/</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
+            <id>mchv-release</id>
+            <name>MCHV Release Apache Maven Packages</name>
+            <url>https://mvn.mchv.eu/repository/mchv</url>
         </repository>
         <repository>
             <id>mchv-snapshot</id>
-            <name>MCHV Apache Maven Packages</name>
-            <url>https://mvn.mchv.eu/repository/mchv-snapshot/</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
+            <name>MCHV Snapshot Apache Maven Packages</name>
+            <url>https://mvn.mchv.eu/repository/mchv</url>
         </repository>
     </repositories>
 
     <distributionManagement>
         <repository>
-            <id>mchv</id>
-            <name>MCHV Apache Maven Packages</name>
-            <url>https://mvn.mchv.eu/repository/mchv/</url>
+            <id>mchv-release-distribution</id>
+            <name>MCHV Release Apache Maven Packages Distribution</name>
+            <url>https://mvn.mchv.eu/repository/mchv</url>
         </repository>
         <snapshotRepository>
-            <id>mchv-snapshot</id>
-            <name>MCHV Apache Maven Packages</name>
-            <url>https://mvn.mchv.eu/repository/mchv-snapshot/</url>
+            <id>mchv-snapshot-distribution</id>
+            <name>MCHV Snapshot Apache Maven Packages Distribution</name>
+            <url>https://mvn.mchv.eu/repository/mchv-snapshot</url>
         </snapshotRepository>
     </distributionManagement>
     <scm>
@@ -57,7 +45,7 @@
             <groupId>it.tdlight</groupId>
             <artifactId>tdlib-natives-linux-amd64</artifactId>
             <version>2.0.2</version>
-        </dependency> 
+        </dependency>
         <dependency>
             <groupId>it.tdlight</groupId>
             <artifactId>tdlib-natives-linux-aarch64</artifactId>
@@ -76,9 +64,9 @@
         </dependency>
         -->
         <dependency>
-            <groupId>it.cavallium.concurrentlocks</groupId>
+            <groupId>it.cavallium</groupId>
             <artifactId>concurrent-locks</artifactId>
-            <version>1.0.3</version>
+            <version>1.0.5</version>
         </dependency>
     </dependencies>
     <build>
