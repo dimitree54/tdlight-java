@@ -14,11 +14,23 @@
             <id>mchv</id>
             <name>MCHV Apache Maven Packages</name>
             <url>https://mvn.mchv.eu/repository/mchv/</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
         </repository>
         <repository>
             <id>mchv-snapshot</id>
             <name>MCHV Apache Maven Packages</name>
             <url>https://mvn.mchv.eu/repository/mchv-snapshot/</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
         </repository>
     </repositories>
 
@@ -66,7 +78,7 @@
         <dependency>
             <groupId>it.cavallium</groupId>
             <artifactId>concurrent-locks</artifactId>
-            <version>1.0.3</version>
+            <version>1.0.2</version>
         </dependency>
     </dependencies>
     <build>
