@@ -76,9 +76,9 @@
         </dependency>
         -->
         <dependency>
-            <groupId>it.cavallium</groupId>
+            <groupId>it.cavallium.concurrentlocks</groupId>
             <artifactId>concurrent-locks</artifactId>
-            <version>1.0.2</version>
+            <version>1.0.3</version>
         </dependency>
     </dependencies>
     <build>
