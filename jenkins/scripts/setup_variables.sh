@@ -1,8 +1,8 @@
 #!/bin/bash -e
 
 # ====== Variables
-export TD_SRC_DIR=$TRAVIS_BUILD_DIR/dependencies/tdlight
-export TD_BIN_DIR=$TRAVIS_BUILD_DIR/dependencies/tdlight/bin-td-cross
+export TD_SRC_DIR=$TRAVIS_BUILD_DIR/dependencies/tdlib
+export TD_BIN_DIR=$TRAVIS_BUILD_DIR/dependencies/tdlib/bin-td-cross
 export TDNATIVES_BIN_DIR=$TRAVIS_BUILD_DIR/bin-tdlight
 export TDNATIVES_CPP_SRC_DIR=$TRAVIS_BUILD_DIR/tdapi
 export TDNATIVES_DOCS_BIN_DIR=$TRAVIS_BUILD_DIR/bin-docs
