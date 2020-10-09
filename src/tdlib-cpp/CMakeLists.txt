@@ -9,9 +9,31 @@ if (POLICY CMP0054)
   cmake_policy(SET CMP0054 NEW)
 endif()
 
-cmake_policy(SET CMP0074 NEW)
-
 find_package(Td REQUIRED)
+
+if (NOT OPENSSL_FOUND)
+  find_package(OpenSSL)
+endif()
+if (OPENSSL_FOUND)
+  message(STATUS "Found OpenSSL: ${OPENSSL_INCLUDE_DIR} ${OPENSSL_LIBRARIES}")
+endif()
+
+if (NOT OPENSSL_FOUND)
+  message(WARNING "Can't find OpenSSL: stop TDLib building")
+  return()
+endif()
+
+SET(CMAKE_FIND_LIBRARY_SUFFIXES ".a")
+if (NOT ZLIB_FOUND)
+  find_package(ZLIB)
+endif()
+if (ZLIB_FOUND)
+  message(STATUS "Found zlib: ${ZLIB_LIBRARIES}")
+endif()
+if (NOT ZLIB_FOUND)
+  message(WARNING "Can't find zlib: stop TDLib building")
+  return()
+endif()
 
 if (NOT JNI_FOUND)
   find_package(JNI REQUIRED)
@@ -66,7 +88,8 @@ add_library(tdjni SHARED
   td_jni.cpp
 )
 target_include_directories(tdjni PRIVATE ${JAVA_INCLUDE_PATH} ${JAVA_INCLUDE_PATH2})
-target_link_libraries(tdjni PRIVATE Td::TdStatic ${JAVA_JVM_LIBRARY})
+target_include_directories(tdjni SYSTEM PRIVATE ${OPENSSL_INCLUDE_DIR})
+target_link_libraries(tdjni PRIVATE Td::TdStatic ${JAVA_JVM_LIBRARY} -static ${OPENSSL_CRYPTO_LIBRARY} ${CMAKE_DL_LIBS} ${ZLIB_LIBRARIES} gcc stdc++ pthread)
 target_compile_definitions(tdjni PRIVATE PACKAGE_NAME="${TD_API_JAVA_PACKAGE}")
 set_property(TARGET tdjni PROPERTY CXX_STANDARD 14)
 
