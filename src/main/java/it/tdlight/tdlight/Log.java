@@ -1,7 +1,7 @@
 package it.tdlight.tdlight;
 
-import it.tdlight.tdlib.FatalErrorCallbackPtr;
-import it.tdlight.tdlib.NativeLog;
+import it.tdlight.jni.FatalErrorCallbackPtr;
+import it.tdlight.jni.NativeLog;
 import it.tdlight.tdlib.TdApi;
 
 /**

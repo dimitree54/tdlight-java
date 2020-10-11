@@ -1,7 +1,7 @@
 package it.tdlight.tdlight;
 
 import it.cavallium.concurrentlocks.ReentrantReadWriteUpdateLock;
-import it.tdlight.tdlib.NativeClient;
+import it.tdlight.jni.NativeClient;
 import it.tdlight.tdlib.TdApi;
 import it.tdlight.tdlib.TdApi.AuthorizationStateClosed;
 import it.tdlight.tdlib.TdApi.AuthorizationStateClosing;
