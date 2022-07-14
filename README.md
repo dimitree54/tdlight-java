@@ -22,7 +22,7 @@ Then compile tdlight-java using maven:
 cd tdlight
 mvn install
 ```
-Now `tdlight-java:1.0.0.0-SNAPSHOT` placed to mavenLocal (for me, it is `/Users/yid/.m2/repository/it/tdlight/tdlight-java/1.0.0.0-SNAPSHOT`), and you can use it:
+Now `tdlight-java:1.0.0.0-SNAPSHOT` placed to mavenLocal (for me, it is `~/.m2/repository/it/tdlight/tdlight-java/1.0.0.0-SNAPSHOT`), and you can use it:
 ```gradle
 repositories {
 	...
