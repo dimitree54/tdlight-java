@@ -13,6 +13,26 @@
 </div>
 <br>
 
+# tdlight-java with macos aarch64 support
+
+That repository contains small modifications to enabale macos aarch64 support. 
+At first, you need to compile native library for macos aarch64: https://github.com/dimitree54/tdlight-java-natives
+Then compile tdlight-java using maven:
+```shell
+cd tdlight
+mvn install
+```
+Now `tdlight-java:1.0.0.0-SNAPSHOT` placed to mavenLocal (for me, it is `/Users/yid/.m2/repository/it/tdlight/tdlight-java/1.0.0.0-SNAPSHOT`), and you can use it:
+```gradle
+dependencies {
+	implementation(platform("it.tdlight:tdlight-java-bom:1.0.0.0-SNAPSHOT"))
+	implementation("it.tdlight:tdlight-java:1.0.0.0-SNAPSHOT")
+	implementation("it.tdlight:tdlight-natives-osx-aarch64:4.0.0-SNAPSHOT")
+	implementation("org.slf4j:slf4j-api:1.7.36")
+	implementation("org.slf4j:slf4j-simple:1.7.36")
+}
+```
+
 ## 💻 Supported platforms
 
 **Java versions**: from Java 8 to Java 17
