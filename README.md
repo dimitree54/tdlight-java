@@ -24,6 +24,10 @@ mvn install
 ```
 Now `tdlight-java:1.0.0.0-SNAPSHOT` placed to mavenLocal (for me, it is `/Users/yid/.m2/repository/it/tdlight/tdlight-java/1.0.0.0-SNAPSHOT`), and you can use it:
 ```gradle
+repositories {
+	...
+	mavenLocal()
+}
 dependencies {
 	implementation(platform("it.tdlight:tdlight-java-bom:1.0.0.0-SNAPSHOT"))
 	implementation("it.tdlight:tdlight-java:1.0.0.0-SNAPSHOT")
