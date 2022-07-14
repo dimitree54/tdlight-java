@@ -13,4 +13,5 @@ public final class LibraryVersion {
 	public static final String LINUX_PPC64LE_CLASS = "it.tdlight.jni.tdlib.linux.ppc64le.v4_0_${nativesRevisionNumber}.LoadLibrary";
 	public static final String WINDOWS_AMD64_CLASS = "it.tdlight.jni.tdlib.win.amd64.v4_0_${nativesRevisionNumber}.LoadLibrary";
 	public static final String OSX_AMD64_CLASS = "it.tdlight.jni.tdlib.osx.amd64.v4_0_${nativesRevisionNumber}.LoadLibrary";
+	public static final String OSX_AARCH64_CLASS = "it.tdlight.jni.tdlib.osx.aarch64.v4_0_${nativesRevisionNumber}.LoadLibrary";
 }

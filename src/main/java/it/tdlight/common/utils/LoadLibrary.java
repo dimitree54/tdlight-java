@@ -151,8 +151,13 @@ public final class LoadLibrary {
 				}
 				break;
 			case OSX:
-				if (arch == Arch.AMD64) {
-					classForResource = tryLoadLibraryVersionClass(LibraryVersion.OSX_AMD64_CLASS, os, arch);
+				switch (arch) {
+					case AMD64:
+						classForResource = tryLoadLibraryVersionClass(LibraryVersion.OSX_AMD64_CLASS, os, arch);
+						break;
+					case AARCH64:
+						classForResource = tryLoadLibraryVersionClass(LibraryVersion.OSX_AARCH64_CLASS, os, arch);
+						break;
 				}
 				break;
 			case WINDOWS:
