@@ -51,6 +51,7 @@ dependencies {
 - aarch64/armv8/arm64 (Linux)
 - s390x (Linux)
 - ppc64el/ppc64le (Linux)
+- aarch64 OSX!!!  <--------
 
 ## 📚 Required libraries
 - **Linux: OpenSSL, zlib**
